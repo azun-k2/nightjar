@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nightjar — keep your Mac awake, honestly</title>
+<meta name="description" content="Nightjar keeps a Mac awake from the menu bar, and says so when macOS ignores it. Free helper here for keeping it awake with the lid closed.">
+<meta property="og:title" content="Nightjar for macOS">
+<meta property="og:description" content="Keep your Mac awake from the menu bar, with a visible countdown and conditions that switch it on by themselves.">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="icon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+<div class="hero">
+  <div class="icon"><img src="icon-512.png" alt="" width="512" height="512"></div>
+  <h1>Nightjar</h1>
+  <p class="tagline">Keep your Mac awake. Honestly.</p>
+  <nav class="links">
+    <a href="./">Home</a>
+    <a href="#helper">Closed-lid helper</a>
+    <a href="support.html">Support</a>
+    <a href="privacy.html">Privacy policy</a>
+    <a href="mailto:khangazun@gmail.com?subject=Nightjar%20support&body=What%20happened%3A%0A%0A%0AWhat%20I%20expected%20instead%3A%0A%0A%0ADetails%20that%20help%3A%0A-%20macOS%20version%3A%0A-%20Mac%3A%20Apple%20silicon%20or%20Intel%0A-%20Nightjar%20version%20%28Settings%2C%20About%29%3A%0A-%20Which%20feature%3A%20the%20switch%2C%20a%20trigger%2C%20the%20screensaver%2C%20or%20the%20closed%20lid%0A">Email support</a>
+  </nav>
+</div>
+
+<section class="card">
+  <h2>What it does</h2>
+  <p>Nightjar holds your Mac awake from the menu bar: one switch, a countdown beside it, and everything else out of the way until you want it. It is named after the bird that stays up all night.</p>
+  <ul>
+    <li><strong>One choice, not three switches.</strong> Keep the Mac and the display awake, keep just the Mac awake and let the screen sleep, or nothing at all.</li>
+    <li><strong>A countdown you can actually see</strong>, in the menu bar next to the symbol, in digits of equal width so nothing jitters. It stops at zero.</li>
+    <li><strong>Conditions that switch it on by themselves</strong>: while an app is running, while an external display is plugged in, while a volume is mounted, while the power adapter is connected, or while the battery is above a level you pick.</li>
+    <li><strong>It tells you the truth.</strong> Staying awake with the display off only works on the power adapter; on battery macOS accepts the request and then ignores it, and Nightjar says so rather than failing quietly.</li>
+    <li><strong>It shows what else is keeping the Mac awake</strong>, named process by process. No other app of this kind does that.</li>
+    <li><strong>Battery rules</strong>, so a session stops before it flattens a laptop.</li>
+    <li><strong>Links and a command line</strong> for Shortcuts, Raycast, a browser or a script.</li>
+  </ul>
+  <p class="note">Requires macOS 14 Sonoma or later. Available in thirty-four languages.</p>
+</section>
+
+<section class="card" id="helper">
+  <h2>Keeping it awake with the lid closed</h2>
+  <p>Closing the lid is an explicit instruction to sleep, and no app from the App Store can override it. This small free helper can. It is a separate download because Apple does not allow an App Store app to install a privileged helper — not because it costs anything.</p>
+  <p>It is built to fail safe: the permission is time-limited, renewed every few seconds, and withdrawn if Nightjar stops, the battery drops, the charger comes out, or eight hours pass. Nothing keeps a Mac awake by accident.</p>
+  <div class="download">
+    <a class="button" href="https://github.com/azun-k2/nightjar/releases/latest/download/Nightjar-Lid.zip">Download Nightjar Lid</a>
+    <span class="small">macOS 14 or later · Apple silicon and Intel · free · <a href="https://github.com/azun-k2/nightjar/releases">all versions</a></span>
+  </div>
+
+  <h3>How to install it</h3>
+  <picture>
+    <source srcset="lid-steps-dark.png" media="(prefers-color-scheme: dark)">
+    <img class="steps" src="lid-steps.png" loading="lazy" decoding="async"
+         alt="Four steps. One, the downloaded Nightjar-Lid.zip in the Downloads folder. Two, the same folder after double-clicking the zip, now holding the Nightjar Lid app. Three, Nightjar Lid open, with an Install button. Four, Nightjar's Settings showing closed-lid support working.">
+  </picture>
+  <ol>
+    <li>Unzip the download and open <strong>Nightjar Lid</strong>.</li>
+    <li>Click <strong>Install</strong> and enter your password. It is asked for once, by macOS, to put a small background service in place.</li>
+    <li>In Nightjar, open <strong>Settings &rsaquo; General</strong> and switch on <strong>Keep awake with the lid closed</strong>.</li>
+  </ol>
+  <p class="note">To remove it later, open Nightjar Lid again and click <strong>Remove</strong>. It clears the override before it uninstalls, so a Mac is never left unable to sleep.</p>
+</section>
+
+<section class="card">
+  <h2>Automation</h2>
+  <p>Every command exists both as a link and on the command line, so Shortcuts, Raycast, a browser or a script can drive it:</p>
+  <pre><code>nightjar://activate?minutes=30
+nightjar://activate?until=17:30
+nightjar://toggle</code></pre>
+  <p>The program inside the app takes the same arguments and hands them to the running copy:</p>
+  <pre><code>"/Applications/Nightjar.app/Contents/MacOS/Nightjar" --activate --minutes=30</code></pre>
+</section>
+
+<section class="card">
+  <h2>Privacy in one paragraph</h2>
+  <p>Nightjar holds open the power assertions macOS already provides. It reads nothing about you, makes no network connection at all, and has no account. Your settings live in the app's own sandbox container. The full <a href="privacy.html">privacy policy</a> says the same thing at greater length.</p>
+</section>
+<footer>
+<p>Nightjar for macOS · <a href="./">Home</a> · <a href="support.html">Support</a> · <a href="privacy.html">Privacy</a> · <a href="mailto:khangazun@gmail.com?subject=Nightjar%20support&body=What%20happened%3A%0A%0A%0AWhat%20I%20expected%20instead%3A%0A%0A%0ADetails%20that%20help%3A%0A-%20macOS%20version%3A%0A-%20Mac%3A%20Apple%20silicon%20or%20Intel%0A-%20Nightjar%20version%20%28Settings%2C%20About%29%3A%0A-%20Which%20feature%3A%20the%20switch%2C%20a%20trigger%2C%20the%20screensaver%2C%20or%20the%20closed%20lid%0A">khangazun@gmail.com</a></p>
+</footer>
+</main>
+</body>
+</html>

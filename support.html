@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nightjar — support</title>
+<meta name="description" content="Support for Nightjar, a macOS menu bar app that keeps a Mac awake.">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="icon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+<div class="hero">
+  <div class="icon"><img src="icon-512.png" alt="" width="512" height="512"></div>
+  <h1>Support</h1>
+  <p class="tagline">Nightjar for macOS</p>
+  <nav class="links">
+    <a href="./">Home</a>
+    <a href="privacy.html">Privacy policy</a>
+    <a href="mailto:khangazun@gmail.com?subject=Nightjar%20support&body=What%20happened%3A%0A%0A%0AWhat%20I%20expected%20instead%3A%0A%0A%0ADetails%20that%20help%3A%0A-%20macOS%20version%3A%0A-%20Mac%3A%20Apple%20silicon%20or%20Intel%0A-%20Nightjar%20version%20%28Settings%2C%20About%29%3A%0A-%20Which%20feature%3A%20the%20switch%2C%20a%20trigger%2C%20the%20screensaver%2C%20or%20the%20closed%20lid%0A">Email support</a>
+  </nav>
+</div>
+
+<section class="card">
+  <h2>Getting in touch</h2>
+  <p>Email <a href="mailto:khangazun@gmail.com?subject=Nightjar%20support&body=What%20happened%3A%0A%0A%0AWhat%20I%20expected%20instead%3A%0A%0A%0ADetails%20that%20help%3A%0A-%20macOS%20version%3A%0A-%20Mac%3A%20Apple%20silicon%20or%20Intel%0A-%20Nightjar%20version%20%28Settings%2C%20About%29%3A%0A-%20Which%20feature%3A%20the%20switch%2C%20a%20trigger%2C%20the%20screensaver%2C%20or%20the%20closed%20lid%0A">khangazun@gmail.com</a>. The link fills in a template, because a report without the macOS version takes two more round trips to answer. Expect a reply within a few days.</p>
+</section>
+
+<section class="card">
+  <h2>Common questions</h2>
+
+  <h3>The display still sleeps, or the Mac still sleeps</h3>
+  <p>Check which of the three states the switch is in. <em>Mac and display</em> holds both awake; <em>Mac only</em> deliberately lets the screen go dark. The panel says which one is in force.</p>
+
+  <h3>"Stay awake with the display off" does nothing on battery</h3>
+  <p>That is macOS, not Nightjar. The assertion that keeps a Mac awake with the screen off is only honoured on the power adapter; on battery the system accepts the request and then ignores it. Nightjar shows an orange note when this applies rather than pretending it worked.</p>
+
+  <h3>The screensaver still starts</h3>
+  <p>Power assertions cannot stop the screensaver — it runs on its own idle clock and ignores them, which is why apps that claim to prevent it often fail. Nightjar can hold it off, but only with your permission: switch on <strong>Hold off the screensaver</strong> in Settings &rsaquo; General and grant the permission macOS asks for. With it on, Nightjar posts at most one empty modifier key every thirty seconds, and only if the Mac has already been quiet that long. It moves no cursor and types nothing.</p>
+
+  <h3>Closing the lid still sleeps the Mac</h3>
+  <p>Closing the lid is an explicit sleep instruction that no App Store app can override, so this one feature needs the small free helper from the <a href="./#helper">home page</a>. After installing it, switch on <strong>Keep awake with the lid closed</strong> in Settings &rsaquo; General and leave Nightjar running for a few seconds. If Settings says the helper is installed but is not receiving anything, log out and back in once: the part that relays the permission starts with your login session.</p>
+
+  <h3>The session stops on its own</h3>
+  <p>Three things end a session on purpose: the countdown reaching zero, the battery falling below the level set in Settings, and the charger being unplugged if that rule is on. The panel's subtitle says which one it was.</p>
+
+  <h3>A condition is switching it on when I do not want it to</h3>
+  <p>Settings &rsaquo; Triggers lists every condition with a tick beside the ones currently true, so you can see which one is holding the session open. Remove it with the button at the end of its row, or set <em>Stay awake while</em> to <em>all hold</em> so a single condition is no longer enough.</p>
+
+  <h3>Some conditions other apps offer are missing</h3>
+  <p>On purpose. A sandboxed app cannot see background processes, and the name of the Wi-Fi network needs Location access. Rather than offering conditions that would quietly never fire, Nightjar leaves them out and says so in Settings.</p>
+
+  <h3>Removing the helper</h3>
+  <p>Open Nightjar Lid and click <strong>Remove</strong>. It clears the lid override before uninstalling, so the Mac is never left unable to sleep. Removing Nightjar itself does not remove the helper; the helper stops acting the moment Nightjar is no longer renewing its permission, and withdraws it within a minute.</p>
+
+  <h3>Which languages</h3>
+  <p>Thirty-four. Nightjar follows the language order in System Settings &rsaquo; General &rsaquo; Language &amp; Region.</p>
+</section>
+
+<section class="card">
+  <h2>Requirements</h2>
+  <ul>
+    <li>macOS 14 Sonoma or later.</li>
+    <li>Apple silicon or Intel.</li>
+    <li>No network connection is needed, or used.</li>
+  </ul>
+</section>
+<footer>
+<p>Nightjar for macOS · <a href="./">Home</a> · <a href="support.html">Support</a> · <a href="privacy.html">Privacy</a> · <a href="mailto:khangazun@gmail.com?subject=Nightjar%20support&body=What%20happened%3A%0A%0A%0AWhat%20I%20expected%20instead%3A%0A%0A%0ADetails%20that%20help%3A%0A-%20macOS%20version%3A%0A-%20Mac%3A%20Apple%20silicon%20or%20Intel%0A-%20Nightjar%20version%20%28Settings%2C%20About%29%3A%0A-%20Which%20feature%3A%20the%20switch%2C%20a%20trigger%2C%20the%20screensaver%2C%20or%20the%20closed%20lid%0A">khangazun@gmail.com</a></p>
+</footer>
+</main>
+</body>
+</html>

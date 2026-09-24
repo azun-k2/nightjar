@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nightjar — privacy policy</title>
+<meta name="description" content="Nightjar collects nothing, sends nothing and has no network access.">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="icon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+<div class="hero">
+  <div class="icon"><img src="icon-512.png" alt="" width="512" height="512"></div>
+  <h1>Privacy policy</h1>
+  <p class="tagline">Nightjar for macOS · last updated 24 September 2026</p>
+  <nav class="links">
+    <a href="./">Home</a>
+    <a href="support.html">Support</a>
+    <a href="mailto:khangazun@gmail.com?subject=Nightjar%20privacy&body=">Email</a>
+  </nav>
+</div>
+
+<section class="card">
+  <h2>The short version</h2>
+  <p>Nightjar collects nothing about you, sends nothing anywhere, and has no account. It has no network access at all, so nothing could leave your Mac even if the app tried.</p>
+</section>
+
+<section class="card">
+  <h2>What the app reads</h2>
+  <p>To decide whether to keep the Mac awake, Nightjar reads, on your Mac and only while it is running:</p>
+  <ul>
+    <li>Whether the power adapter is connected and the battery level.</li>
+    <li>How many external displays are attached, and the names of mounted volumes.</li>
+    <li>The bundle identifiers of running applications, and which one is in front.</li>
+    <li>The list of power assertions held on this Mac, so the panel can show what else is keeping it awake.</li>
+    <li>How long the Mac has been idle, but only while <em>Hold off the screensaver</em> is switched on.</li>
+  </ul>
+  <p>None of this is recorded, transmitted or kept. It is read fresh every couple of seconds, used to make one decision, and discarded.</p>
+</section>
+
+<section class="card">
+  <h2>What is stored, and where</h2>
+  <p>Your settings — which mode you chose, the default duration, your conditions and battery rules — are stored in the app's own sandbox container on your Mac, by macOS, the same way any Mac app stores preferences. Deleting the app removes them.</p>
+  <p>When closed-lid support is on, Nightjar writes a short-lived permission file into a container shared with the helper. It contains an expiry time, a heartbeat time, and the battery conditions under which it stays valid. It contains nothing about you, and it is removed when the feature is switched off.</p>
+</section>
+
+<section class="card">
+  <h2>Permissions</h2>
+  <p><strong>Accessibility or Input Monitoring</strong> is requested only if you switch on <em>Hold off the screensaver</em>, and only then. With it, Nightjar posts an empty modifier key — no cursor movement, no typed characters, no reading of anything you type. Switch the feature off and the permission goes unused.</p>
+  <p><strong>The closed-lid helper</strong> asks for an administrator password once, at install, because it puts a small background service in place. That is macOS asking, not the app.</p>
+</section>
+
+<section class="card">
+  <h2>No tracking of any kind</h2>
+  <p>There is no analytics, no telemetry, no crash reporting, no advertising identifier and no third-party SDK. Nothing is shared with anyone, because nothing is collected in the first place.</p>
+</section>
+
+<section class="card">
+  <h2>Children</h2>
+  <p>Nightjar is suitable for all ages and collects no personal information from anyone, including children.</p>
+</section>
+
+<section class="card">
+  <h2>Changes and contact</h2>
+  <p>If this policy ever changes, the new version will be posted here with a new date. Questions: <a href="mailto:khangazun@gmail.com?subject=Nightjar%20privacy&body=">khangazun@gmail.com</a>.</p>
+</section>
+<footer>
+<p>Nightjar for macOS · <a href="./">Home</a> · <a href="support.html">Support</a> · <a href="privacy.html">Privacy</a> · <a href="mailto:khangazun@gmail.com?subject=Nightjar%20privacy&body=">khangazun@gmail.com</a></p>
+</footer>
+</main>
+</body>
+</html>

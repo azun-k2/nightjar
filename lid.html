@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nightjar Lid — closed-lid helper for Nightjar</title>
+<meta name="description" content="Nightjar Lid is a free helper that lets Nightjar keep a Mac awake with the lid closed. Free helper here for keeping it awake with the lid closed.">
+<meta property="og:title" content="Nightjar for macOS">
+<meta property="og:description" content="Keep your Mac awake from the menu bar, with a visible countdown and conditions that switch it on by themselves.">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="icon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+<div class="hero">
+  <div class="icon"><img src="icon-512.png" alt="" width="512" height="512"></div>
+  <h1>Nightjar</h1>
+  <p class="tagline">Nightjar Lid, the closed-lid helper</p>
+  <nav class="links">
+    <a href="./">Home</a>
+    <a href="support.html">Support</a>
+    <a href="privacy.html">Privacy policy</a>
+    <a href="mailto:khangazun@gmail.com?subject=Nightjar%20support&body=What%20happened%3A%0A%0A%0AWhat%20I%20expected%20instead%3A%0A%0A%0ADetails%20that%20help%3A%0A-%20macOS%20version%3A%0A-%20Mac%3A%20Apple%20silicon%20or%20Intel%0A-%20Nightjar%20version%20%28Settings%2C%20About%29%3A%0A-%20Which%20feature%3A%20the%20switch%2C%20a%20trigger%2C%20the%20screensaver%2C%20or%20the%20closed%20lid%0A">Email support</a>
+  </nav>
+</div>
+
+<section class="card">
+  <h2>Keeping it awake with the lid closed</h2>
+  <p>Closing the lid is an explicit instruction to sleep, and no app from the App Store can override it. This small free helper can. It is a separate download because Apple does not allow an App Store app to install a privileged helper — not because it costs anything.</p>
+  <p>It is built to fail safe: the permission is time-limited, renewed every few seconds, and withdrawn if Nightjar stops, the battery drops, the charger comes out, or eight hours pass. Nothing keeps a Mac awake by accident.</p>
+  <div class="download">
+    <a class="button" href="https://github.com/azun-k2/nightjar/releases/latest/download/Nightjar-Lid.zip">Download Nightjar Lid</a>
+    <span class="small">macOS 14 or later · Apple silicon and Intel · free · <a href="https://github.com/azun-k2/nightjar/releases">all versions</a></span>
+  </div>
+
+  <h3>How to install it</h3>
+  <picture>
+    <source srcset="lid-steps-dark.png" media="(prefers-color-scheme: dark)">
+    <img class="steps" src="lid-steps.png" loading="lazy" decoding="async"
+         alt="Four steps. One, the downloaded Nightjar-Lid.zip in the Downloads folder. Two, the same folder after double-clicking the zip, now holding the Nightjar Lid app. Three, Nightjar Lid open, with an Install button. Four, Nightjar's Settings showing closed-lid support working.">
+  </picture>
+  <ol>
+    <li>Unzip the download and open <strong>Nightjar Lid</strong>.</li>
+    <li>Click <strong>Install</strong> and enter your password. It is asked for once, by macOS, to put a small background service in place.</li>
+    <li>In Nightjar, open <strong>Settings &rsaquo; General</strong> and switch on <strong>Keep awake with the lid closed</strong>.</li>
+  </ol>
+  <p class="note">To remove it later, open Nightjar Lid again and click <strong>Remove</strong>. It clears the override before it uninstalls, so a Mac is never left unable to sleep.</p>
+</section>
+<footer>
+<p>Nightjar for macOS · <a href="./">Home</a> · <a href="support.html">Support</a> · <a href="privacy.html">Privacy</a> · <a href="mailto:khangazun@gmail.com?subject=Nightjar%20support&body=What%20happened%3A%0A%0A%0AWhat%20I%20expected%20instead%3A%0A%0A%0ADetails%20that%20help%3A%0A-%20macOS%20version%3A%0A-%20Mac%3A%20Apple%20silicon%20or%20Intel%0A-%20Nightjar%20version%20%28Settings%2C%20About%29%3A%0A-%20Which%20feature%3A%20the%20switch%2C%20a%20trigger%2C%20the%20screensaver%2C%20or%20the%20closed%20lid%0A">khangazun@gmail.com</a></p>
+</footer>
+</main>
+</body>
+</html>

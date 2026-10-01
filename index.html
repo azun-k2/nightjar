@@ -116,8 +116,8 @@
     <li><strong>A countdown you can actually see</strong>, in the menu bar next to the symbol, in digits of equal width so nothing jitters. It stops at zero.</li>
     <li><strong>Conditions that switch it on by themselves</strong>: while an app is running, while an external display is plugged in, while a volume is mounted, while the power adapter is connected, or while the battery is above a level you pick.</li>
     <li><strong>It tells you the truth.</strong> Staying awake with the display off only works on the power adapter; on battery macOS accepts the request and then ignores it, and Nightjar says so rather than failing quietly.</li>
-    <li><strong>It shows what else is keeping the Mac awake</strong>, named process by process. No other app of this kind does that.</li>
-    <li><strong>Battery rules</strong>, so a session stops before it flattens a laptop.</li>
+    <li><strong>It shows what else is keeping the Mac awake</strong>, named process by process.</li>
+    <li><strong>Battery rules</strong>, so a session stops before it flattens a laptop, and an optional notification when the battery runs low while the Mac is kept awake.</li>
     <li><strong>Links and a command line</strong> for Shortcuts, Raycast, a browser or a script.</li>
   </ul>
   <p class="note">Requires macOS 14 Sonoma or later. Available in thirty-four languages.</p>
@@ -125,7 +125,7 @@
 
 <section class="card">
   <h2>Automation</h2>
-  <p>Every command exists both as a link and on the command line, so Shortcuts, Raycast, a browser or a script can drive it:</p>
+  <p>Three actions are ready in the Shortcuts app with no setup: keep awake for a while or with no limit, stop keeping awake, and ask whether Nightjar is keeping the Mac awake. Siri and Spotlight know them too. Every command exists both as a link and on the command line, so Shortcuts, Raycast, a browser or a script can drive it:</p>
   <pre><code>nightjar://activate?minutes=30
 nightjar://activate?until=17:30
 nightjar://toggle</code></pre>

@@ -116,8 +116,8 @@
     <li><strong>Un compte enrere que es veu de debò</strong>, a la barra de menús al costat del símbol, amb xifres d’amplada igual perquè res no balli. S’atura a zero.</li>
     <li><strong>Condicions que l’activen soles</strong>: mentre una app està oberta, mentre hi ha una pantalla externa connectada, mentre hi ha un volum muntat, mentre l’adaptador de corrent està connectat o mentre la bateria és per sobre d’un nivell que triïs.</li>
     <li><strong>Et diu la veritat.</strong> Mantenir-se despert amb la pantalla apagada només funciona amb l’adaptador de corrent; amb bateria, el macOS accepta la petició i després la ignora, i el Nightjar t’ho diu en lloc de fallar en silenci.</li>
-    <li><strong>Mostra què més manté despert el Mac</strong>, procés per procés i amb el seu nom. Cap altra app d’aquest tipus ho fa.</li>
-    <li><strong>Regles de bateria</strong>, perquè una sessió s’aturi abans de deixar sense càrrega un portàtil.</li>
+    <li><strong>Mostra què més manté despert el Mac</strong>, procés per procés i amb el seu nom.</li>
+    <li><strong>Regles de bateria</strong>, perquè una sessió s’aturi abans de deixar sense càrrega un portàtil, i un avís opcional quan la bateria baixa mentre el manté despert.</li>
     <li><strong>Enllaços i una línia d’ordres</strong> per a Dreceres, Raycast, un navegador o un script.</li>
   </ul>
   <p class="note">Requereix el macOS 14 Sonoma o posterior. Disponible en trenta-quatre idiomes.</p>
@@ -125,7 +125,7 @@
 
 <section class="card">
   <h2>Automatització</h2>
-  <p>Cada ordre existeix com a enllaç i a la línia d’ordres, de manera que Dreceres, Raycast, un navegador o un script la poden controlar:</p>
+  <p>Hi ha tres accions a punt a l'app Dreceres sense configurar res: mantenir despert una estona o sense límit, deixar de mantenir despert i preguntar si el Nightjar manté despert el Mac. Siri i Spotlight també les coneixen. Cada ordre existeix com a enllaç i a la línia d’ordres, de manera que Dreceres, Raycast, un navegador o un script la poden controlar:</p>
   <pre><code>nightjar://activate?minutes=30
 nightjar://activate?until=17:30
 nightjar://toggle</code></pre>

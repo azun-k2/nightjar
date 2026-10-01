@@ -116,8 +116,8 @@
     <li><strong>Visszaszámlálás, amely tényleg látható</strong>, a menüsorban a szimbólum mellett, egyforma szélességű számjegyekkel, hogy semmi ne ugráljon. Nullánál megáll.</li>
     <li><strong>Feltételek, amelyek maguktól bekapcsolják</strong>: amíg egy alkalmazás fut, amíg külső kijelző csatlakozik, amíg egy kötet csatlakoztatva van, amíg a hálózati adapter csatlakozik, vagy amíg az akkumulátor töltöttsége az Ön által választott szint felett van.</li>
     <li><strong>Megmondja az igazat.</strong> A kikapcsolt kijelzővel való ébren maradás csak hálózati adapterről működik; akkumulátorról a macOS elfogadja a kérést, majd figyelmen kívül hagyja, és a Nightjar ezt meg is mondja, ahelyett hogy csendben kudarcot vallana.</li>
-    <li><strong>Megmutatja, mi tartja még ébren a Macet</strong>, folyamatról folyamatra, név szerint. Egyetlen más ilyen alkalmazás sem teszi ezt.</li>
-    <li><strong>Akkumulátorszabályok</strong>, hogy a munkamenet még azelőtt leálljon, hogy lemerítené a laptopot.</li>
+    <li><strong>Megmutatja, mi tartja még ébren a Macet</strong>, folyamatról folyamatra, név szerint.</li>
+    <li><strong>Akkumulátorszabályok</strong>, hogy a munkamenet még azelőtt leálljon, hogy lemerítené a laptopot, és egy választható értesítés, ha ébren tartás közben fogy az akkumulátor.</li>
     <li><strong>Hivatkozások és parancssor</strong> a Parancsok apphoz, a Raycasthez, egy böngészőhöz vagy egy szkripthez.</li>
   </ul>
   <p class="note">macOS 14 Sonoma vagy újabb szükséges. 34 nyelven érhető el.</p>
@@ -125,7 +125,7 @@
 
 <section class="card">
   <h2>Automatizálás</h2>
-  <p>Minden parancs elérhető hivatkozásként és a parancssorban is, így a Parancsok, a Raycast, egy böngésző vagy egy szkript is vezérelheti:</p>
+  <p>A Parancsok appban beállítás nélkül három művelet áll készen: ébren tartás egy ideig vagy korlát nélkül, az ébren tartás befejezése, és annak lekérdezése, hogy a Nightjar ébren tartja-e a Macet. A Siri és a Spotlight is ismeri őket. Minden parancs elérhető hivatkozásként és a parancssorban is, így a Parancsok, a Raycast, egy böngésző vagy egy szkript is vezérelheti:</p>
   <pre><code>nightjar://activate?minutes=30
 nightjar://activate?until=17:30
 nightjar://toggle</code></pre>

@@ -116,8 +116,8 @@
     <li><strong>Un compte à rebours que l’on voit vraiment</strong>, dans la barre des menus à côté du symbole, en chiffres de largeur égale pour que rien ne tremble. Il s’arrête à zéro.</li>
     <li><strong>Des conditions qui l’activent d’elles-mêmes</strong> : tant qu’une app est ouverte, tant qu’un écran externe est branché, tant qu’un volume est monté, tant que l’adaptateur secteur est connecté, ou tant que la batterie reste au-dessus d’un niveau que vous choisissez.</li>
     <li><strong>Il vous dit la vérité.</strong> Rester éveillé écran éteint ne fonctionne que sur l’adaptateur secteur ; sur batterie, macOS accepte la demande puis l’ignore, et Nightjar le dit au lieu d’échouer en silence.</li>
-    <li><strong>Il montre ce qui garde encore le Mac éveillé</strong>, processus par processus, avec leur nom. Aucune autre app de ce genre ne le fait.</li>
-    <li><strong>Des règles de batterie</strong>, pour qu’une session s’arrête avant de vider un portable.</li>
+    <li><strong>Il montre ce qui garde encore le Mac éveillé</strong>, processus par processus, avec leur nom.</li>
+    <li><strong>Des règles de batterie</strong>, pour qu’une session s’arrête avant de vider un portable, et une notification facultative quand la batterie faiblit pendant qu’il le garde éveillé.</li>
     <li><strong>Des liens et une ligne de commande</strong> pour Raccourcis, Raycast, un navigateur ou un script.</li>
   </ul>
   <p class="note">Nécessite macOS 14 Sonoma ou ultérieur. Disponible en trente-quatre langues.</p>
@@ -125,7 +125,7 @@
 
 <section class="card">
   <h2>Automatisation</h2>
-  <p>Chaque commande existe à la fois sous forme de lien et en ligne de commande, si bien que Raccourcis, Raycast, un navigateur ou un script peuvent la piloter :</p>
+  <p>Trois actions sont prêtes dans l'app Raccourcis, sans rien configurer : garder éveillé un moment ou sans limite, ne plus garder éveillé, et demander si Nightjar maintient le Mac éveillé. Siri et Spotlight les connaissent aussi. Chaque commande existe à la fois sous forme de lien et en ligne de commande, si bien que Raccourcis, Raycast, un navigateur ou un script peuvent la piloter :</p>
   <pre><code>nightjar://activate?minutes=30
 nightjar://activate?until=17:30
 nightjar://toggle</code></pre>

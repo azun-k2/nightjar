@@ -116,8 +116,8 @@
     <li><strong>Odliczanie, które naprawdę widać</strong>, na pasku menu obok symbolu, cyframi o równej szerokości, żeby nic nie skakało. Zatrzymuje się na zerze.</li>
     <li><strong>Warunki, które same go włączają</strong>: gdy działa wybrana aplikacja, gdy podłączony jest zewnętrzny monitor, gdy zamontowany jest wolumin, gdy podłączony jest zasilacz albo gdy bateria jest powyżej wybranego przez Ciebie poziomu.</li>
     <li><strong>Mówi prawdę.</strong> Czuwanie przy wyłączonym ekranie działa tylko na zasilaczu; na baterii macOS przyjmuje prośbę, a potem ją ignoruje, i Nightjar mówi o tym, zamiast po cichu zawodzić.</li>
-    <li><strong>Pokazuje, co jeszcze nie pozwala Macowi zasnąć</strong>, proces po procesie, z nazwy. Żadna inna aplikacja tego rodzaju tego nie robi.</li>
-    <li><strong>Reguły baterii</strong>, żeby sesja skończyła się, zanim rozładuje laptopa.</li>
+    <li><strong>Pokazuje, co jeszcze nie pozwala Macowi zasnąć</strong>, proces po procesie, z nazwy.</li>
+    <li><strong>Reguły baterii</strong>, żeby sesja skończyła się, zanim rozładuje laptopa, oraz opcjonalne powiadomienie, gdy bateria się wyczerpuje podczas czuwania.</li>
     <li><strong>Linki i wiersz poleceń</strong> dla Skrótów, Raycasta, przeglądarki albo skryptu.</li>
   </ul>
   <p class="note">Wymaga systemu macOS 14 Sonoma lub nowszego. Dostępny w 34 językach.</p>
@@ -125,7 +125,7 @@
 
 <section class="card">
   <h2>Automatyzacja</h2>
-  <p>Każde polecenie istnieje zarówno jako link, jak i w wierszu poleceń, więc mogą nim sterować Skróty, Raycast, przeglądarka albo skrypt:</p>
+  <p>W aplikacji Skróty bez konfiguracji czekają trzy czynności: utrzymuj czuwanie przez chwilę lub bez limitu, przestań utrzymywać czuwanie oraz zapytaj, czy Nightjar utrzymuje Maca w czuwaniu. Znają je też Siri i Spotlight. Każde polecenie istnieje zarówno jako link, jak i w wierszu poleceń, więc mogą nim sterować Skróty, Raycast, przeglądarka albo skrypt:</p>
   <pre><code>nightjar://activate?minutes=30
 nightjar://activate?until=17:30
 nightjar://toggle</code></pre>

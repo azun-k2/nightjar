@@ -116,8 +116,8 @@
     <li><strong>真正看得见的倒计时</strong>，就在菜单栏图标旁边，用等宽数字显示，不会跳动。它停在零。</li>
     <li><strong>会自己打开的条件</strong>：某个 App 在运行时、接着外接显示器时、挂载着某个宗卷时、插着电源适配器时，或者电量高于你设定的水平时。</li>
     <li><strong>它说实话。</strong>关掉显示器保持唤醒只在接电源适配器时有效；用电池时，macOS 会接受请求然后置之不理，而 Nightjar 会告诉你，而不是悄悄失效。</li>
-    <li><strong>它会显示还有什么在让 Mac 保持唤醒</strong>，一个进程一个进程，指名道姓。同类 App 里没有别的这样做。</li>
-    <li><strong>电池规则</strong>，让会话在耗尽笔记本电量之前停下。</li>
+    <li><strong>它会显示还有什么在让 Mac 保持唤醒</strong>，一个进程一个进程，指名道姓。</li>
+    <li><strong>电池规则</strong>，让会话在耗尽笔记本电量之前停下；保持唤醒期间电量变低时，还可以选择收到通知。</li>
     <li><strong>链接和命令行</strong>，供快捷指令、Raycast、浏览器或脚本使用。</li>
   </ul>
   <p class="note">需要 macOS 14 Sonoma 或更高版本。提供 34 种语言。</p>
@@ -125,7 +125,7 @@
 
 <section class="card">
   <h2>自动化</h2>
-  <p>每条命令都既有链接形式，也能在命令行里用，因此快捷指令、Raycast、浏览器或脚本都可以控制它：</p>
+  <p>“快捷指令”App 中已备好三个操作，无需设置：保持唤醒一段时间或不限时间、停止保持唤醒，以及询问 Nightjar 是否正在让 Mac 保持唤醒。Siri 和聚焦也能使用它们。每条命令都既有链接形式，也能在命令行里用，因此快捷指令、Raycast、浏览器或脚本都可以控制它：</p>
   <pre><code>nightjar://activate?minutes=30
 nightjar://activate?until=17:30
 nightjar://toggle</code></pre>

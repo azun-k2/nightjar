@@ -116,8 +116,8 @@
     <li><strong>Đồng hồ đếm ngược thực sự nhìn thấy được</strong>, trên thanh menu cạnh biểu tượng, bằng các chữ số rộng bằng nhau nên không bị nhảy. Nó dừng ở số không.</li>
     <li><strong>Các điều kiện tự bật nó lên</strong>: khi một ứng dụng đang chạy, khi đang cắm màn hình ngoài, khi một ổ đĩa đang được gắn, khi đang cắm bộ đổi nguồn, hoặc khi pin còn trên mức bạn chọn.</li>
     <li><strong>Nó nói thật với bạn.</strong> Giữ thức khi màn hình tắt chỉ có tác dụng khi cắm bộ đổi nguồn; khi dùng pin, macOS nhận yêu cầu rồi phớt lờ nó, và Nightjar nói rõ điều đó thay vì lặng lẽ thất bại.</li>
-    <li><strong>Nó cho thấy còn gì khác đang giữ Mac thức</strong>, từng tiến trình một, gọi đúng tên. Không ứng dụng nào khác cùng loại làm được điều đó.</li>
-    <li><strong>Quy tắc pin</strong>, để một phiên dừng lại trước khi làm cạn pin máy tính xách tay.</li>
+    <li><strong>Nó cho thấy còn gì khác đang giữ Mac thức</strong>, từng tiến trình một, gọi đúng tên.</li>
+    <li><strong>Quy tắc pin</strong>, để một phiên dừng lại trước khi làm cạn pin máy tính xách tay, cùng một thông báo tùy chọn khi pin yếu trong lúc đang giữ Mac thức.</li>
     <li><strong>Liên kết và dòng lệnh</strong> cho Phím tắt, Raycast, trình duyệt hoặc một tập lệnh.</li>
   </ul>
   <p class="note">Yêu cầu macOS 14 Sonoma trở lên. Có 34 ngôn ngữ.</p>
@@ -125,7 +125,7 @@
 
 <section class="card">
   <h2>Tự động hóa</h2>
-  <p>Mọi lệnh đều có cả dạng liên kết lẫn dòng lệnh, nên Phím tắt, Raycast, trình duyệt hoặc một tập lệnh đều có thể điều khiển nó:</p>
+  <p>Có sẵn ba tác vụ trong ứng dụng Phím tắt mà không cần thiết lập: giữ thức một lúc hoặc không giới hạn, ngừng giữ thức, và hỏi Nightjar có đang giữ máy Mac thức không. Siri và Spotlight cũng biết chúng. Mọi lệnh đều có cả dạng liên kết lẫn dòng lệnh, nên Phím tắt, Raycast, trình duyệt hoặc một tập lệnh đều có thể điều khiển nó:</p>
   <pre><code>nightjar://activate?minutes=30
 nightjar://activate?until=17:30
 nightjar://toggle</code></pre>

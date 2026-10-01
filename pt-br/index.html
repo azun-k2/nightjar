@@ -116,8 +116,8 @@
     <li><strong>Uma contagem regressiva que dá para ver de verdade</strong>, na barra de menus ao lado do símbolo, com algarismos de largura igual para que nada tremule. Ela para no zero.</li>
     <li><strong>Condições que o ativam sozinhas</strong>: enquanto um app estiver aberto, enquanto um monitor externo estiver conectado, enquanto um volume estiver montado, enquanto o adaptador de energia estiver ligado ou enquanto a bateria estiver acima de um nível que você escolher.</li>
     <li><strong>Ele diz a verdade.</strong> Ficar acordado com a tela apagada só funciona no adaptador de energia; na bateria, o macOS aceita o pedido e depois o ignora, e o Nightjar avisa em vez de falhar em silêncio.</li>
-    <li><strong>Ele mostra o que mais está mantendo o Mac acordado</strong>, processo por processo, pelo nome. Nenhum outro app do gênero faz isso.</li>
-    <li><strong>Regras de bateria</strong>, para que uma sessão pare antes de esgotar um notebook.</li>
+    <li><strong>Ele mostra o que mais está mantendo o Mac acordado</strong>, processo por processo, pelo nome.</li>
+    <li><strong>Regras de bateria</strong>, para que uma sessão pare antes de esgotar um notebook, e um aviso opcional quando a bateria fica baixa enquanto ele mantém o Mac acordado.</li>
     <li><strong>Links e linha de comando</strong> para Atalhos, Raycast, um navegador ou um script.</li>
   </ul>
   <p class="note">Requer macOS 14 Sonoma ou posterior. Disponível em 34 idiomas.</p>
@@ -125,7 +125,7 @@
 
 <section class="card">
   <h2>Automação</h2>
-  <p>Cada comando existe como link e na linha de comando, para que Atalhos, Raycast, um navegador ou um script possam controlá-lo:</p>
+  <p>Três ações estão prontas no app Atalhos, sem configurar nada: manter acordado por um tempo ou sem limite, parar de manter acordado e perguntar se o Nightjar está mantendo o Mac acordado. A Siri e o Spotlight também as conhecem. Cada comando existe como link e na linha de comando, para que Atalhos, Raycast, um navegador ou um script possam controlá-lo:</p>
   <pre><code>nightjar://activate?minutes=30
 nightjar://activate?until=17:30
 nightjar://toggle</code></pre>

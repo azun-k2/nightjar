@@ -22,7 +22,7 @@ put too.
 The source lives in a separate private repository; only the downloads and the
 site are public.
 
-Support is by email: <khangazun@gmail.com>. Every mail link on the site opens a
+Support is by email: <support@khangazun.com>. Every mail link on the site opens a
 message with a template already in it.
 
 ## Pages

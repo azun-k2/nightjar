@@ -54,6 +54,7 @@
 <body>
 <main>
 <div class="hero">
+  <div class="hero-pill">⚡ Visuell våken-nedtelling · Ærlig status hvis macOS går i dvale</div>
   <div class="icon"><img src="../icon-512.png" alt="" width="512" height="512"></div>
   <h1>Nightjar</h1>
   <p class="tagline">Hold Macen våken. Ærlig og redelig.</p>
@@ -108,6 +109,51 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="nightjar-stage" role="group" aria-label="Interaktiv demo: bytt våken tilstand og lukket lokk-simulering">
+    <div id="njCard" class="nj-cup-card" role="button" tabindex="0" aria-pressed="true">
+      <div class="nj-icon" id="njIcon">☕</div>
+      <div class="nj-status-text" id="njStatus">Mac er våken</div>
+      <div class="nj-sub-text" id="njSub">Skjerm og system kjører uforstyrret</div>
+    </div>
+    <div class="nj-presets">
+      <button class="app-chip active" data-p="inf">Ubegrenset</button>
+      <button class="app-chip" data-p="1h">1 Time</button>
+      <button class="app-chip" data-p="dl">Under nedlasting</button>
+      <button class="app-chip" id="njLidBtn">💻 Tillat lukket lokk</button>
+    </div>
+    <span class="demo-hint">💡 Klikk på koppen for å bytte tilstand eller velg varighet</span>
+  </div>
+  <p class="demo-note">Visuell simulering. I Mac-appen forhindrer Nightjar reelt dvalemodus og varsler hvis batterinivået faller.</p>
+</div>
+<script>
+(function () {
+  var card = document.getElementById('njCard'), icon = document.getElementById('njIcon');
+  var status = document.getElementById('njStatus'), sub = document.getElementById('njSub');
+  var lidBtn = document.getElementById('njLidBtn');
+  var isAwake = true;
+  function toggle() {
+    isAwake = !isAwake;
+    card.classList.toggle('asleep', !isAwake);
+    card.setAttribute('aria-pressed', isAwake);
+    if (isAwake) {
+      icon.textContent = '☕'; status.textContent = "Mac er våken"; sub.textContent = "Skjerm og system kjører uforstyrret";
+    } else {
+      icon.textContent = '🌙'; status.textContent = "Normal macOS-dvale"; sub.textContent = "Standard strømsparing aktiv";
+    }
+  }
+  card.addEventListener('click', toggle);
+  card.addEventListener('keydown', function(ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggle(); } });
+  if (lidBtn) lidBtn.addEventListener('click', function() { lidBtn.classList.toggle('active'); });
+  document.querySelectorAll('.nj-presets .app-chip').forEach(function(b) {
+    if (b === lidBtn) return;
+    b.addEventListener('click', function() {
+      document.querySelectorAll('.nj-presets .app-chip').forEach(function(x) { if (x !== lidBtn) x.classList.remove('active'); });
+      b.classList.add('active'); if (!isAwake) toggle();
+    });
+  });
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -135,6 +181,48 @@ nightjar://toggle</code></pre>
   <pre><code>"/Applications/Nightjar.app/Contents/MacOS/Nightjar" --activate --minutes=30</code></pre>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>Tradisjonelle dvaleverktøy sammenlignet med Nightjar</h2>
+  <p class="section-lead">Hold din Mac pålitelig våken uten uventet tømming av batteriet.</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Aspekt</th>
+          <th>Tradisjonelle verktøy</th>
+          <th class="highlight-col">Nightjar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Ærlig status</strong></td>
+          <td>Svikt i stillhet når bedriftsprofiler tvinger maskinen i dvale</td>
+          <td class="highlight-col"><strong>Rapporterer ærlig når macOS overstyrer våken-låsen</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Lukket lokk</strong></td>
+          <td>Mac går umiddelbart i dvale og avbryter oppgaver når lokket lukkes</td>
+          <td class="highlight-col"><strong>Trygg hjelper lar nedlastinger og eksporter fortsette med lukket lokk</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Batterisikkerhet</strong></td>
+          <td>Tapper MacBook-batteriet helt ned til 0% hvis du glemmer det</td>
+          <td class="highlight-col"><strong>Slipper automatisk våken-låsen hvis batteriet faller under grenseverdien</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Smarte regler</strong></td>
+          <td>Kun manuell av og på med museklikk</td>
+          <td class="highlight-col"><strong>Automatiske regler: under nedlasting, på valgt Wi-Fi eller ved åpent program</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Rettigheter</strong></td>
+          <td>Krever kompliserte bakgrunnsprosesser med root-tilgang</td>
+          <td class="highlight-col"><strong>Standard macOS-systemkall helt uten behov for administratorrettigheter</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>Personvern i ett avsnitt</h2>
   <p>Nightjar holder åpne de strømforespørslene macOS allerede tilbyr. Den leser ingenting om deg, kobler seg ikke til noe nettverk og har ingen konto. Innstillingene dine ligger i appens egen sandkassebeholder. Den fullstendige <a href="privacy.html">personvernerklæringen</a> sier det samme, mer utførlig.</p>

@@ -54,6 +54,7 @@
 <body>
 <main>
 <div class="hero">
+  <div class="hero-pill">⚡ Vizuális ébrentartó visszaszámlálás · Őszinte állapotjelzés, ha a macOS elalszik</div>
   <div class="icon"><img src="../icon-512.png" alt="" width="512" height="512"></div>
   <h1>Nightjar</h1>
   <p class="tagline">Tartsa ébren a Macet. Őszintén.</p>
@@ -108,6 +109,51 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="nightjar-stage" role="group" aria-label="Interaktív bemutató: ébrenlét és lecsukott fedél szimulációja">
+    <div id="njCard" class="nj-cup-card" role="button" tabindex="0" aria-pressed="true">
+      <div class="nj-icon" id="njIcon">☕</div>
+      <div class="nj-status-text" id="njStatus">A Mac ébren marad</div>
+      <div class="nj-sub-text" id="njSub">Kijelző és rendszer zavartalanul aktív</div>
+    </div>
+    <div class="nj-presets">
+      <button class="app-chip active" data-p="inf">Végtelen</button>
+      <button class="app-chip" data-p="1h">1 Óra</button>
+      <button class="app-chip" data-p="dl">Letöltés közben</button>
+      <button class="app-chip" id="njLidBtn">💻 Lecsukott fedél engedélyezve</button>
+    </div>
+    <span class="demo-hint">💡 Kattintson a csészére az állapotváltáshoz vagy válasszon időtartamot</span>
+  </div>
+  <p class="demo-note">Vizuális szimuláció. A Mac alkalmazásban a Nightjar megbízhatóan ébren tartja a gépet és védi az akkut.</p>
+</div>
+<script>
+(function () {
+  var card = document.getElementById('njCard'), icon = document.getElementById('njIcon');
+  var status = document.getElementById('njStatus'), sub = document.getElementById('njSub');
+  var lidBtn = document.getElementById('njLidBtn');
+  var isAwake = true;
+  function toggle() {
+    isAwake = !isAwake;
+    card.classList.toggle('asleep', !isAwake);
+    card.setAttribute('aria-pressed', isAwake);
+    if (isAwake) {
+      icon.textContent = '☕'; status.textContent = "A Mac ébren marad"; sub.textContent = "Kijelző és rendszer zavartalanul aktív";
+    } else {
+      icon.textContent = '🌙'; status.textContent = "Normál macOS alvó állapot"; sub.textContent = "Szokásos energiatakarékosság bekapcsolva";
+    }
+  }
+  card.addEventListener('click', toggle);
+  card.addEventListener('keydown', function(ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggle(); } });
+  if (lidBtn) lidBtn.addEventListener('click', function() { lidBtn.classList.toggle('active'); });
+  document.querySelectorAll('.nj-presets .app-chip').forEach(function(b) {
+    if (b === lidBtn) return;
+    b.addEventListener('click', function() {
+      document.querySelectorAll('.nj-presets .app-chip').forEach(function(x) { if (x !== lidBtn) x.classList.remove('active'); });
+      b.classList.add('active'); if (!isAwake) toggle();
+    });
+  });
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -135,6 +181,48 @@ nightjar://toggle</code></pre>
   <pre><code>"/Applications/Nightjar.app/Contents/MacOS/Nightjar" --activate --minutes=30</code></pre>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>Hagyományos ébrentartó eszközök és a Nightjar</h2>
+  <p class="section-lead">Tartsa a Macet ébren biztonságosan, véletlen akkulemerülés vagy csendes leállás nélkül.</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Szempont</th>
+          <th>Hagyományos eszközök</th>
+          <th class="highlight-col">Nightjar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Őszinte visszajelzés</strong></td>
+          <td>Csendben leállnak, ha a vállalati profilok alvást kényszerítenek ki</td>
+          <td class="highlight-col"><strong>Egyértelműen jelzi, ha a macOS felülbírálja az ébrentartást</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Lecsukott fedél</strong></td>
+          <td>A kijelző lecsukásakor a Mac azonnal elalszik és megszakítja a folyamatokat</td>
+          <td class="highlight-col"><strong>Biztonságos segéd, amellyel a letöltések és exportok zárt fedéllel is futnak</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Akkumulátorvédelem</strong></td>
+          <td>Ha elfelejti kikapcsolni, 0%-ra meríti a MacBook akkumulátorát</td>
+          <td class="highlight-col"><strong>Automatikusan engedélyezi az alvást, ha az akku a megadott szint alá esik</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Intelligens feltételek</strong></td>
+          <td>Csak kézi ki- és bekapcsolás egérkattintással</td>
+          <td class="highlight-col"><strong>Automatikus szabályok: letöltés közben, kijelölt Wi-Fi-n vagy futó app mellett</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Jogosultságok</strong></td>
+          <td>Bonyolult háttérfolyamatokat és root hozzáférést igényelnek</td>
+          <td class="highlight-col"><strong>Szabványos macOS energiagazdálkodás rendszergazdai jogok nélkül</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>Adatvédelem egy bekezdésben</h2>
   <p>A Nightjar a macOS által eleve biztosított energiagazdálkodási kéréseket tartja nyitva. Semmit sem olvas Önről, semmilyen hálózati kapcsolatot nem létesít, és nincs fiókja. A beállításai az alkalmazás saját sandbox-tárolójában vannak. A teljes <a href="privacy.html">adatvédelmi irányelvek</a> ugyanezt mondják el bővebben.</p>

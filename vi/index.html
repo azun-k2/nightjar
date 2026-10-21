@@ -54,6 +54,7 @@
 <body>
 <main>
 <div class="hero">
+  <div class="hero-pill">⚡ Đếm ngược thời gian thức trực quan · Báo cáo trung thực khi macOS ngủ</div>
   <div class="icon"><img src="../icon-512.png" alt="" width="512" height="512"></div>
   <h1>Nightjar</h1>
   <p class="tagline">Giữ cho Mac của bạn thức. Một cách trung thực.</p>
@@ -108,6 +109,51 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="nightjar-stage" role="group" aria-label="Bản demo tương tác: bật tắt trạng thái thức và mô phỏng gập nắp">
+    <div id="njCard" class="nj-cup-card" role="button" tabindex="0" aria-pressed="true">
+      <div class="nj-icon" id="njIcon">☕</div>
+      <div class="nj-status-text" id="njStatus">Mac đang thức</div>
+      <div class="nj-sub-text" id="njSub">Màn hình và hệ thống không bị gián đoạn</div>
+    </div>
+    <div class="nj-presets">
+      <button class="app-chip active" data-p="inf">Vô thời hạn</button>
+      <button class="app-chip" data-p="1h">1 Giờ</button>
+      <button class="app-chip" data-p="dl">Khi đang tải file</button>
+      <button class="app-chip" id="njLidBtn">💻 Cho phép gập nắp máy</button>
+    </div>
+    <span class="demo-hint">💡 Nhấn vào biểu tượng tách cà phê để bật/tắt hoặc chọn mốc thời gian</span>
+  </div>
+  <p class="demo-note">Mô phỏng trực quan. Trên ứng dụng Mac, Nightjar tạo lệnh giữ thức chuẩn xác và cảnh báo ngay nếu pin yếu hoặc macOS can thiệp.</p>
+</div>
+<script>
+(function () {
+  var card = document.getElementById('njCard'), icon = document.getElementById('njIcon');
+  var status = document.getElementById('njStatus'), sub = document.getElementById('njSub');
+  var lidBtn = document.getElementById('njLidBtn');
+  var isAwake = true;
+  function toggle() {
+    isAwake = !isAwake;
+    card.classList.toggle('asleep', !isAwake);
+    card.setAttribute('aria-pressed', isAwake);
+    if (isAwake) {
+      icon.textContent = '☕'; status.textContent = "Mac đang thức"; sub.textContent = "Màn hình và hệ thống không bị gián đoạn";
+    } else {
+      icon.textContent = '🌙'; status.textContent = "macOS ngủ bình thường"; sub.textContent = "Chế độ tiết kiệm năng lượng đang bật";
+    }
+  }
+  card.addEventListener('click', toggle);
+  card.addEventListener('keydown', function(ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggle(); } });
+  if (lidBtn) lidBtn.addEventListener('click', function() { lidBtn.classList.toggle('active'); });
+  document.querySelectorAll('.nj-presets .app-chip').forEach(function(b) {
+    if (b === lidBtn) return;
+    b.addEventListener('click', function() {
+      document.querySelectorAll('.nj-presets .app-chip').forEach(function(x) { if (x !== lidBtn) x.classList.remove('active'); });
+      b.classList.add('active'); if (!isAwake) toggle();
+    });
+  });
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -135,6 +181,48 @@ nightjar://toggle</code></pre>
   <pre><code>"/Applications/Nightjar.app/Contents/MacOS/Nightjar" --activate --minutes=30</code></pre>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>Các công cụ giữ thức truyền thống so với Nightjar</h2>
+  <p class="section-lead">Giữ máy Mac thức tin cậy mà không lo cạn kiệt pin bất ngờ hay lỗi ngầm.</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Đặc tính</th>
+          <th>Công cụ truyền thống</th>
+          <th class="highlight-col">Nightjar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Báo cáo trung thực</strong></td>
+          <td>Âm thầm thất bại khi chính sách doanh nghiệp ép máy ngủ</td>
+          <td class="highlight-col"><strong>Thông báo rõ ràng khi hệ điều hành macOS ghi đè lệnh giữ thức</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Gập nắp máy tính</strong></td>
+          <td>Máy bị ngắt đột ngột khi gập nắp màn hình</td>
+          <td class="highlight-col"><strong>Chế độ gập nắp an toàn giúp quá trình xuất video hay tải file tiếp tục chạy</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Bảo vệ pin</strong></td>
+          <td>Dễ làm kiệt pin về 0% nếu người dùng quên tắt</td>
+          <td class="highlight-col"><strong>Tự động nhả lệnh giữ thức khi pin giảm xuống dưới mức cài đặt</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Kích hoạt thông minh</strong></td>
+          <td>Chỉ có thể bật tắt thủ công bằng tay</td>
+          <td class="highlight-col"><strong>Tự bật khi đang tải tệp, khi kết nối Wi-Fi chỉ định hoặc app đang mở</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Quyền hạn</strong></td>
+          <td>Đòi hỏi daemon chạy ngầm quyền root hoặc driver phức tạp</td>
+          <td class="highlight-col"><strong>Sử dụng API tiết kiệm năng lượng chuẩn của macOS, không cần quyền root</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>Quyền riêng tư trong một đoạn</h2>
   <p>Nightjar chỉ giữ các xác nhận nguồn điện (power assertion) mà macOS vốn đã cung cấp. Nó không đọc gì về bạn, hoàn toàn không kết nối mạng và không có tài khoản. Cài đặt của bạn nằm trong vùng chứa sandbox riêng của ứng dụng. <a href="privacy.html">Chính sách quyền riêng tư</a> đầy đủ nói đúng những điều này, chi tiết hơn.</p>

@@ -54,6 +54,7 @@
 <body>
 <main>
 <div class="hero">
+  <div class="hero-pill">⚡ ספירה לאחור ויזואלית · דיווח אמיתי כשמערכת macOS עוברת לשינה</div>
   <div class="icon"><img src="../icon-512.png" alt="" width="512" height="512"></div>
   <h1>Nightjar</h1>
   <p class="tagline">להשאיר את ה‑Mac ער. ביושר.</p>
@@ -108,6 +109,51 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="nightjar-stage" role="group" aria-label="הדגמה אינטראקטיבית: מעבר בין מצב ער למסך סגור">
+    <div id="njCard" class="nj-cup-card" role="button" tabindex="0" aria-pressed="true">
+      <div class="nj-icon" id="njIcon">☕</div>
+      <div class="nj-status-text" id="njStatus">ה-Mac נשאר ער</div>
+      <div class="nj-sub-text" id="njSub">המסך והמערכת פועלים ללא הפרעה</div>
+    </div>
+    <div class="nj-presets">
+      <button class="app-chip active" data-p="inf">ללא הגבלת זמן</button>
+      <button class="app-chip" data-p="1h">שעה אחת</button>
+      <button class="app-chip" data-p="dl">בזמן הורדה</button>
+      <button class="app-chip" id="njLidBtn">💻 אפשר כאשר המכסה סגור</button>
+    </div>
+    <span class="demo-hint">💡 לחץ על סמל הכוס כדי לשנות מצב או בחר משך זמן</span>
+  </div>
+  <p class="demo-note">הדמיה חזותית. באפליקציית ה-Mac,‏ Nightjar מונע שינה בצורה אמיתית ומתריע כשהסוללה נחלשת.</p>
+</div>
+<script>
+(function () {
+  var card = document.getElementById('njCard'), icon = document.getElementById('njIcon');
+  var status = document.getElementById('njStatus'), sub = document.getElementById('njSub');
+  var lidBtn = document.getElementById('njLidBtn');
+  var isAwake = true;
+  function toggle() {
+    isAwake = !isAwake;
+    card.classList.toggle('asleep', !isAwake);
+    card.setAttribute('aria-pressed', isAwake);
+    if (isAwake) {
+      icon.textContent = '☕'; status.textContent = "ה-Mac נשאר ער"; sub.textContent = "המסך והמערכת פועלים ללא הפרעה";
+    } else {
+      icon.textContent = '🌙'; status.textContent = "מצב שינה רגיל של macOS"; sub.textContent = "חיסכון באנרגיה סטנדרטי פעיל";
+    }
+  }
+  card.addEventListener('click', toggle);
+  card.addEventListener('keydown', function(ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggle(); } });
+  if (lidBtn) lidBtn.addEventListener('click', function() { lidBtn.classList.toggle('active'); });
+  document.querySelectorAll('.nj-presets .app-chip').forEach(function(b) {
+    if (b === lidBtn) return;
+    b.addEventListener('click', function() {
+      document.querySelectorAll('.nj-presets .app-chip').forEach(function(x) { if (x !== lidBtn) x.classList.remove('active'); });
+      b.classList.add('active'); if (!isAwake) toggle();
+    });
+  });
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -135,6 +181,48 @@ nightjar://toggle</code></pre>
   <pre dir="ltr"><code>"/Applications/Nightjar.app/Contents/MacOS/Nightjar" --activate --minutes=30</code></pre>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>כלים מסורתיים למניעת שינה מול Nightjar</h2>
+  <p class="section-lead">שמור על המק שלך ער באמינות מלאה וללא התרוקנות פתאומית של הסוללה.</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>מאפיין</th>
+          <th>כלים מסורתיים</th>
+          <th class="highlight-col">Nightjar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>אמינות הדיווח</strong></td>
+          <td>נכשלים בשקט כאשר מדיניות ארגונית כופה מעבר לשינה</td>
+          <td class="highlight-col"><strong>מדווח בשקיפות מלאה אם מערכת macOS עוקפת את מניעת השינה</strong></td>
+        </tr>
+        <tr>
+          <td><strong>מכסה סגור</strong></td>
+          <td>המחשב עובר לשינה מיידית וקוטע הורדות כאשר סוגרים את המסך</td>
+          <td class="highlight-col"><strong>עוזר בטוח המאפשר המשך הורדות וייצוא קבצים גם כשהמסך סגור</strong></td>
+        </tr>
+        <tr>
+          <td><strong>הגנת סוללה</strong></td>
+          <td>מרוקן את סוללת ה-MacBook עד ל-0% אם שכחת לכבות</td>
+          <td class="highlight-col"><strong>משחרר אוטומטית את נעילת השינה כאשר הסוללה יורדת מתחת לסף</strong></td>
+        </tr>
+        <tr>
+          <td><strong>הפעלה חכמה</strong></td>
+          <td>הפעלה וכיבוי ידניים בלבד בלחיצת עכבר</td>
+          <td class="highlight-col"><strong>חוקים אוטומטיים: בזמן הורדת קובץ, ברשת Wi-Fi נבחרת או בהפעלת אפליקציה</strong></td>
+        </tr>
+        <tr>
+          <td><strong>הרשאות</strong></td>
+          <td>דורשים תהליכי רקע מורכבים והרשאות מנהל (root)</td>
+          <td class="highlight-col"><strong>הוראות ניהול אנרגיה סטנדרטיות של macOS ללא צורך בהרשאות מיוחדות</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>פרטיות בפסקה אחת</h2>
   <p>Nightjar מחזיק פתוחות את הצהרות החשמל (power assertions) ש‑macOS כבר מספק. הוא לא קורא שום דבר עליך, לא יוצר שום חיבור רשת ואין לו חשבון. ההגדרות שלך נשמרות במכל ה‑sandbox של היישום עצמו. <a href="privacy.html">מדיניות הפרטיות</a> המלאה אומרת את אותו הדבר בפירוט רב יותר.</p>

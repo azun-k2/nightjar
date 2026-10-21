@@ -54,6 +54,7 @@
 <body>
 <main>
 <div class="hero">
+  <div class="hero-pill">⚡ Visueller Wach-Countdown · Ehrlicher Status, wenn macOS schläft</div>
   <div class="icon"><img src="../icon-512.png" alt="" width="512" height="512"></div>
   <h1>Nightjar</h1>
   <p class="tagline">Hält Ihren Mac wach. Ehrlich.</p>
@@ -108,6 +109,51 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="nightjar-stage" role="group" aria-label="Interaktive Demo: Wach-Zustand und zugeklapptes Display umschalten">
+    <div id="njCard" class="nj-cup-card" role="button" tabindex="0" aria-pressed="true">
+      <div class="nj-icon" id="njIcon">☕</div>
+      <div class="nj-status-text" id="njStatus">Mac bleibt wach</div>
+      <div class="nj-sub-text" id="njSub">Bildschirm & System ungestört aktiv</div>
+    </div>
+    <div class="nj-presets">
+      <button class="app-chip active" data-p="inf">Unbegrenzt</button>
+      <button class="app-chip" data-p="1h">1 Stunde</button>
+      <button class="app-chip" data-p="dl">Beim Download</button>
+      <button class="app-chip" id="njLidBtn">💻 Bei zugeklapptem Display</button>
+    </div>
+    <span class="demo-hint">💡 Auf die Tasse klicken, um den Wach-Zustand umzuschalten</span>
+  </div>
+  <p class="demo-note">Visuelle Simulation. In der Mac-App steuert Nightjar echte Energie-Zusicherungen und warnt vor leerem Akku.</p>
+</div>
+<script>
+(function () {
+  var card = document.getElementById('njCard'), icon = document.getElementById('njIcon');
+  var status = document.getElementById('njStatus'), sub = document.getElementById('njSub');
+  var lidBtn = document.getElementById('njLidBtn');
+  var isAwake = true;
+  function toggle() {
+    isAwake = !isAwake;
+    card.classList.toggle('asleep', !isAwake);
+    card.setAttribute('aria-pressed', isAwake);
+    if (isAwake) {
+      icon.textContent = '☕'; status.textContent = "Mac bleibt wach"; sub.textContent = "Bildschirm & System ungestört aktiv";
+    } else {
+      icon.textContent = '🌙'; status.textContent = "Normaler macOS-Ruhezustand"; sub.textContent = "Standard-Energiesparmodus aktiv";
+    }
+  }
+  card.addEventListener('click', toggle);
+  card.addEventListener('keydown', function(ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggle(); } });
+  if (lidBtn) lidBtn.addEventListener('click', function() { lidBtn.classList.toggle('active'); });
+  document.querySelectorAll('.nj-presets .app-chip').forEach(function(b) {
+    if (b === lidBtn) return;
+    b.addEventListener('click', function() {
+      document.querySelectorAll('.nj-presets .app-chip').forEach(function(x) { if (x !== lidBtn) x.classList.remove('active'); });
+      b.classList.add('active'); if (!isAwake) toggle();
+    });
+  });
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -135,6 +181,48 @@ nightjar://toggle</code></pre>
   <pre><code>"/Applications/Nightjar.app/Contents/MacOS/Nightjar" --activate --minutes=30</code></pre>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>Klassische Wachhalte-Tools im Vergleich zu Nightjar</h2>
+  <p class="section-lead">Halten Sie Ihren Mac zuverlässig wach, ohne plötzliche Akku-Entleerung.</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Kriterium</th>
+          <th>Klassische Tools</th>
+          <th class="highlight-col">Nightjar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Ehrlicher Status</strong></td>
+          <td>Versagen heimlich, wenn MDM-Firmenprofile den Ruhezustand erzwingen</td>
+          <td class="highlight-col"><strong>Zeigt sofort an, wenn macOS das Wachbleiben ignoriert</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Zugeklappter Deckel</strong></td>
+          <td>Mac geht beim Zuklappen sofort schlafen und bricht Exporte ab</td>
+          <td class="highlight-col"><strong>Sicherer Helfer lässt Downloads und Renderings bei geschlossenem Deckel laufen</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Akkuschutz</strong></td>
+          <td>Entleert den MacBook-Akku unbemerkt bis auf 0%</td>
+          <td class="highlight-col"><strong>Beendet das Wachbleiben automatisch bei niedrigem Akkustand</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Bedingungen</strong></td>
+          <td>Nur manuelles Ein- und Ausschalten per Mausklick</td>
+          <td class="highlight-col"><strong>Automatische Regeln: während Downloads, in bestimmten WLANs oder bei geöffneter App</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Rechte</strong></td>
+          <td>Benötigt komplexe Hintergrund-Daemons mit Root-Rechten</td>
+          <td class="highlight-col"><strong>Standardmäßige macOS-Bordmittel ganz ohne Root-Rechte</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>Datenschutz in einem Absatz</h2>
   <p>Nightjar hält die Power Assertions offen, die macOS ohnehin bereitstellt. Es liest nichts über Sie, baut keinerlei Netzwerkverbindung auf und hat kein Konto. Ihre Einstellungen liegen im eigenen Sandbox-Container der App. Die vollständige <a href="privacy.html">Datenschutzerklärung</a> sagt dasselbe ausführlicher.</p>

@@ -54,6 +54,7 @@
 <body>
 <main>
 <div class="hero">
+  <div class="hero-pill">⚡ ตัวนับเวลาถอยหลังการตื่นแบบภาพ · รายงานตามจริงเมื่อ macOS เข้าสู่โหมดสลีป</div>
   <div class="icon"><img src="../icon-512.png" alt="" width="512" height="512"></div>
   <h1>Nightjar</h1>
   <p class="tagline">ทำให้ Mac ของคุณไม่หลับ อย่างตรงไปตรงมา</p>
@@ -108,6 +109,51 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="nightjar-stage" role="group" aria-label="การสาธิตแบบอินเทอร์แอคทีฟ: สลับสถานะตื่นและจำลองการพับหน้าจอ">
+    <div id="njCard" class="nj-cup-card" role="button" tabindex="0" aria-pressed="true">
+      <div class="nj-icon" id="njIcon">☕</div>
+      <div class="nj-status-text" id="njStatus">Mac กำลังตื่นอยู่</div>
+      <div class="nj-sub-text" id="njSub">จอภาพและระบบทำงานต่อเนื่องไม่มีสะดุด</div>
+    </div>
+    <div class="nj-presets">
+      <button class="app-chip active" data-p="inf">ไม่จำกัดเวลา</button>
+      <button class="app-chip" data-p="1h">1 ชั่วโมง</button>
+      <button class="app-chip" data-p="dl">ขณะกำลังดาวน์โหลด</button>
+      <button class="app-chip" id="njLidBtn">💻 อนุญาตขณะพับหน้าจอ</button>
+    </div>
+    <span class="demo-hint">💡 คลิกที่รูปถ้วยเพื่อสลับสถานะหรือเลือกระยะเวลา</span>
+  </div>
+  <p class="demo-note">การจำลองภาพ ในแอป Mac จริง Nightjar จะป้องกันโหมดสลีปอย่างปลอดภัยและเตือนเมื่อแบตเตอรี่ต่ำ</p>
+</div>
+<script>
+(function () {
+  var card = document.getElementById('njCard'), icon = document.getElementById('njIcon');
+  var status = document.getElementById('njStatus'), sub = document.getElementById('njSub');
+  var lidBtn = document.getElementById('njLidBtn');
+  var isAwake = true;
+  function toggle() {
+    isAwake = !isAwake;
+    card.classList.toggle('asleep', !isAwake);
+    card.setAttribute('aria-pressed', isAwake);
+    if (isAwake) {
+      icon.textContent = '☕'; status.textContent = "Mac กำลังตื่นอยู่"; sub.textContent = "จอภาพและระบบทำงานต่อเนื่องไม่มีสะดุด";
+    } else {
+      icon.textContent = '🌙'; status.textContent = "โหมดสลีปปกติของ macOS"; sub.textContent = "เปิดใช้งานการประหยัดพลังงานมาตรฐาน";
+    }
+  }
+  card.addEventListener('click', toggle);
+  card.addEventListener('keydown', function(ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggle(); } });
+  if (lidBtn) lidBtn.addEventListener('click', function() { lidBtn.classList.toggle('active'); });
+  document.querySelectorAll('.nj-presets .app-chip').forEach(function(b) {
+    if (b === lidBtn) return;
+    b.addEventListener('click', function() {
+      document.querySelectorAll('.nj-presets .app-chip').forEach(function(x) { if (x !== lidBtn) x.classList.remove('active'); });
+      b.classList.add('active'); if (!isAwake) toggle();
+    });
+  });
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -135,6 +181,48 @@ nightjar://toggle</code></pre>
   <pre><code>"/Applications/Nightjar.app/Contents/MacOS/Nightjar" --activate --minutes=30</code></pre>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>แอปช่วยเปิดหน้าจอแบบเดิมเทียบกับ Nightjar</h2>
+  <p class="section-lead">ให้ Mac ของคุณตื่นตัวอย่างมั่นใจโดยไม่ต้องกลัวแบตเตอรี่หมดโดยไม่ตั้งใจ</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>คุณสมบัติ</th>
+          <th>เครื่องมือแบบเดิม</th>
+          <th class="highlight-col">Nightjar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>ความซื่อสัตย์ของสถานะ</strong></td>
+          <td>ทำงานล้มเหลวเงียบๆ เมื่อนโยบายองค์กรบังคับให้สลีป</td>
+          <td class="highlight-col"><strong>แจ้งเตือนอย่างตรงไปตรงมาเมื่อ macOS มีการระงับการสั่งตื่น</strong></td>
+        </tr>
+        <tr>
+          <td><strong>การพับหน้าจอ</strong></td>
+          <td>Mac จะสลีปทันทีที่พับฝาลง ทำให้การดาวน์โหลดหรือแปลงไฟล์หยุดชะงัก</td>
+          <td class="highlight-col"><strong>ระบบช่วยที่ปลอดภัยช่วยให้ดาวน์โหลดและเรนเดอร์งานต่อได้แม้พับหน้าจอ</strong></td>
+        </tr>
+        <tr>
+          <td><strong>ความปลอดภัยของแบตเตอรี่</strong></td>
+          <td>สูบแบตเตอรี่ MacBook จนเหลือ 0% หากคุณลืมปิด</td>
+          <td class="highlight-col"><strong>ยกเลิกการบังคับตื่นโดยอัตโนมัติหากแบตเตอรี่ลดลงต่ำกว่าเกณฑ์</strong></td>
+        </tr>
+        <tr>
+          <td><strong>เงื่อนไขอัจฉริยะ</strong></td>
+          <td>เปิดและปิดด้วยตนเองโดยการคลิกเท่านั้น</td>
+          <td class="highlight-col"><strong>กฎอัตโนมัติ: ขณะดาวน์โหลดไฟล์ เชื่อมต่อ Wi-Fi ที่กำหนด หรือเมื่อแอปเปิดอยู่</strong></td>
+        </tr>
+        <tr>
+          <td><strong>สิทธิ์การเข้าถึง</strong></td>
+          <td>ต้องใช้กระบวนการเบื้องหลังที่ซับซ้อนพร้อมสิทธิ์ root</td>
+          <td class="highlight-col"><strong>ใช้คำสั่งพลังงานมาตรฐานของ macOS โดยไม่ต้องมีสิทธิ์ผู้ดูแลระบบ</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>ความเป็นส่วนตัวในย่อหน้าเดียว</h2>
   <p>Nightjar แค่ถือ power assertion ที่ macOS มีให้อยู่แล้วเอาไว้ ไม่อ่านข้อมูลใด ๆ เกี่ยวกับคุณ ไม่เชื่อมต่อเครือข่ายเลย และไม่มีบัญชี การตั้งค่าของคุณเก็บอยู่ในคอนเทนเนอร์แซนด์บ็อกซ์ของแอปเอง <a href="privacy.html">นโยบายความเป็นส่วนตัว</a>ฉบับเต็มก็บอกเรื่องเดียวกันอย่างละเอียดกว่า</p>

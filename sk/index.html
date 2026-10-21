@@ -54,6 +54,7 @@
 <body>
 <main>
 <div class="hero">
+  <div class="hero-pill">⚡ Vizuálny odpočet bdelosti · Pravdivý stav, ak macOS zaspí</div>
   <div class="icon"><img src="../icon-512.png" alt="" width="512" height="512"></div>
   <h1>Nightjar</h1>
   <p class="tagline">Nechajte svoj Mac bdieť. Úprimne.</p>
@@ -108,6 +109,51 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="nightjar-stage" role="group" aria-label="Interaktívna ukážka: prepnite stav bdelosti a simuláciu zatvoreného veka">
+    <div id="njCard" class="nj-cup-card" role="button" tabindex="0" aria-pressed="true">
+      <div class="nj-icon" id="njIcon">☕</div>
+      <div class="nj-status-text" id="njStatus">Mac zostáva bdelý</div>
+      <div class="nj-sub-text" id="njSub">Displej aj systém bežia bez prerušenia</div>
+    </div>
+    <div class="nj-presets">
+      <button class="app-chip active" data-p="inf">Bez obmedzenia</button>
+      <button class="app-chip" data-p="1h">1 Hodina</button>
+      <button class="app-chip" data-p="dl">Počas sťahovania</button>
+      <button class="app-chip" id="njLidBtn">💻 Povoliť zatvorené veko</button>
+    </div>
+    <span class="demo-hint">💡 Kliknutím na šálku prepnite stav alebo zvoľte trvanie</span>
+  </div>
+  <p class="demo-note">Vizuálna ukážka. V aplikácii pre Mac vytvára Nightjar skutočné systémové požiadavky a chráni batériu.</p>
+</div>
+<script>
+(function () {
+  var card = document.getElementById('njCard'), icon = document.getElementById('njIcon');
+  var status = document.getElementById('njStatus'), sub = document.getElementById('njSub');
+  var lidBtn = document.getElementById('njLidBtn');
+  var isAwake = true;
+  function toggle() {
+    isAwake = !isAwake;
+    card.classList.toggle('asleep', !isAwake);
+    card.setAttribute('aria-pressed', isAwake);
+    if (isAwake) {
+      icon.textContent = '☕'; status.textContent = "Mac zostáva bdelý"; sub.textContent = "Displej aj systém bežia bez prerušenia";
+    } else {
+      icon.textContent = '🌙'; status.textContent = "Bežný spánok macOS"; sub.textContent = "Štandardná úspora energie aktívna";
+    }
+  }
+  card.addEventListener('click', toggle);
+  card.addEventListener('keydown', function(ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggle(); } });
+  if (lidBtn) lidBtn.addEventListener('click', function() { lidBtn.classList.toggle('active'); });
+  document.querySelectorAll('.nj-presets .app-chip').forEach(function(b) {
+    if (b === lidBtn) return;
+    b.addEventListener('click', function() {
+      document.querySelectorAll('.nj-presets .app-chip').forEach(function(x) { if (x !== lidBtn) x.classList.remove('active'); });
+      b.classList.add('active'); if (!isAwake) toggle();
+    });
+  });
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -135,6 +181,48 @@ nightjar://toggle</code></pre>
   <pre><code>"/Applications/Nightjar.app/Contents/MacOS/Nightjar" --activate --minutes=30</code></pre>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>Tradičné nástroje na bdelosť v porovnaní s Nightjar</h2>
+  <p class="section-lead">Udržujte svoj Mac spoľahlivo bdelý bez skrytého vybíjania batérie.</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Vlastnosť</th>
+          <th>Tradičné nástroje</th>
+          <th class="highlight-col">Nightjar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Pravdivý stav</strong></td>
+          <td>Zlyhajú potichu, keď firemné politiky vynútia uspanie</td>
+          <td class="highlight-col"><strong>Otvorene hlási, ak macOS ignoruje blokovanie uspania</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Zatvorené veko</strong></td>
+          <td>Mac okamžite zaspí po zatvorení veka a preruší prácu</td>
+          <td class="highlight-col"><strong>Bezpečný pomocník udrží sťahovanie aj exporty v chode aj so zatvoreným vekom</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Ochrana batérie</strong></td>
+          <td>Pri zabudnutí vybije batériu MacBooku na 0 %</td>
+          <td class="highlight-col"><strong>Automaticky uvoľní blokovanie pri poklese batérie pod nastavenú hranicu</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Inteligentné pravidlá</strong></td>
+          <td>Iba manuálne zapnutie a vypnutie kliknutím</td>
+          <td class="highlight-col"><strong>Podmienky: počas sťahovania, na vybranej Wi-Fi alebo pri bežiacej aplikácii</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Oprávnenia</strong></td>
+          <td>Vyžadujú zložité procesy na pozadí s právami správcu</td>
+          <td class="highlight-col"><strong>Štandardné príkazy napájania macOS bez nutnosti práv root</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>Súkromie v jednom odseku</h2>
   <p>Nightjar drží otvorené aserty napájania, ktoré macOS sám ponúka. Nečíta nič o vás, nenadväzuje žiadne sieťové spojenie a nemá žiadny účet. Vaše nastavenia sú uložené vo vlastnom sandboxovom kontajneri aplikácie. Úplné <a href="privacy.html">zásady ochrany súkromia</a> hovoria to isté podrobnejšie.</p>

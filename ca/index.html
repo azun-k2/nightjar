@@ -54,6 +54,7 @@
 <body>
 <main>
 <div class="hero">
+  <div class="hero-pill">⚡ Compte enrere visual · Estat sincer quan macOS suspèn el sistema</div>
   <div class="icon"><img src="../icon-512.png" alt="" width="512" height="512"></div>
   <h1>Nightjar</h1>
   <p class="tagline">Mantén el Mac despert. Amb franquesa.</p>
@@ -108,6 +109,51 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="nightjar-stage" role="group" aria-label="Demostració interactiva: canvieu l'estat despert i tapa tancada">
+    <div id="njCard" class="nj-cup-card" role="button" tabindex="0" aria-pressed="true">
+      <div class="nj-icon" id="njIcon">☕</div>
+      <div class="nj-status-text" id="njStatus">El Mac està despert</div>
+      <div class="nj-sub-text" id="njSub">Pantalla i sistema sense interrupcions</div>
+    </div>
+    <div class="nj-presets">
+      <button class="app-chip active" data-p="inf">Indefinidament</button>
+      <button class="app-chip" data-p="1h">1 Hora</button>
+      <button class="app-chip" data-p="dl">Mentre es descarrega</button>
+      <button class="app-chip" id="njLidBtn">💻 Amb la tapa tancada</button>
+    </div>
+    <span class="demo-hint">💡 Feu clic a la tassa per canviar d'estat o trieu una durada</span>
+  </div>
+  <p class="demo-note">Simulació visual. A l’app per a Mac, Nightjar manté el sistema despert de veritat i avisa si la bateria baixa.</p>
+</div>
+<script>
+(function () {
+  var card = document.getElementById('njCard'), icon = document.getElementById('njIcon');
+  var status = document.getElementById('njStatus'), sub = document.getElementById('njSub');
+  var lidBtn = document.getElementById('njLidBtn');
+  var isAwake = true;
+  function toggle() {
+    isAwake = !isAwake;
+    card.classList.toggle('asleep', !isAwake);
+    card.setAttribute('aria-pressed', isAwake);
+    if (isAwake) {
+      icon.textContent = '☕'; status.textContent = "El Mac està despert"; sub.textContent = "Pantalla i sistema sense interrupcions";
+    } else {
+      icon.textContent = '🌙'; status.textContent = "Repòs normal de macOS"; sub.textContent = "Estalvi d'energia estàndard actiu";
+    }
+  }
+  card.addEventListener('click', toggle);
+  card.addEventListener('keydown', function(ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggle(); } });
+  if (lidBtn) lidBtn.addEventListener('click', function() { lidBtn.classList.toggle('active'); });
+  document.querySelectorAll('.nj-presets .app-chip').forEach(function(b) {
+    if (b === lidBtn) return;
+    b.addEventListener('click', function() {
+      document.querySelectorAll('.nj-presets .app-chip').forEach(function(x) { if (x !== lidBtn) x.classList.remove('active'); });
+      b.classList.add('active'); if (!isAwake) toggle();
+    });
+  });
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -135,6 +181,48 @@ nightjar://toggle</code></pre>
   <pre><code>"/Applications/Nightjar.app/Contents/MacOS/Nightjar" --activate --minutes=30</code></pre>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>Eines tradicionals davant de Nightjar</h2>
+  <p class="section-lead">Mantingueu el Mac despert amb confiança sense buidar la bateria per descuit.</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Aspecte</th>
+          <th>Eines clàssiques</th>
+          <th class="highlight-col">Nightjar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Sinceritat</strong></td>
+          <td>Fallen en silenci si una política corporativa força el repòs</td>
+          <td class="highlight-col"><strong>Avisa clarament quan macOS ignora l'ordre de mantenir despert</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Tapa tancada</strong></td>
+          <td>El Mac entra en repòs bruscament en tancar la tapa</td>
+          <td class="highlight-col"><strong>Assistent segur perquè descàrregues o exportacions continuïn</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Estalvi de bateria</strong></td>
+          <td>Esgota la bateria fins al 0% si us en descuideu</td>
+          <td class="highlight-col"><strong>Allibera el bloqueig de repòs si la bateria baixa del límit fixat</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Regles intel·ligents</strong></td>
+          <td>Només activació i desactivació manual</td>
+          <td class="highlight-col"><strong>Activació automàtica: en descarregar fitxers o obrir una app</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Permisos</strong></td>
+          <td>Requereix serveis root o controladors de nucli feixucs</td>
+          <td class="highlight-col"><strong>Ordres d'energia estàndard de macOS sense privilegis especials</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>La privadesa en un paràgraf</h2>
   <p>El Nightjar manté obertes les assercions d’energia que el macOS ja ofereix. No llegeix res sobre tu, no fa cap connexió de xarxa i no té cap compte. La teva configuració es desa al contenidor sandbox propi de l’app. La <a href="privacy.html">política de privadesa</a> completa diu el mateix amb més detall.</p>

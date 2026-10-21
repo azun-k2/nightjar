@@ -54,6 +54,7 @@
 <body>
 <main>
 <div class="hero">
+  <div class="hero-pill">⚡ مؤقت تنازلي مرئي · تقرير صادق عندما يفرض نظام macOS السكون</div>
   <div class="icon"><img src="../icon-512.png" alt="" width="512" height="512"></div>
   <h1>Nightjar</h1>
   <p class="tagline">أبقِ جهاز Mac مستيقظًا. بصدق.</p>
@@ -108,6 +109,51 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="nightjar-stage" role="group" aria-label="عرض توضيحي: تبديل حالة الاستيقاظ ومحاكاة غطاء الشاشة المغلق">
+    <div id="njCard" class="nj-cup-card" role="button" tabindex="0" aria-pressed="true">
+      <div class="nj-icon" id="njIcon">☕</div>
+      <div class="nj-status-text" id="njStatus">جهاز Mac في وضع الاستيقاظ</div>
+      <div class="nj-sub-text" id="njSub">الشاشة والنظام يعملان دون انقطاع</div>
+    </div>
+    <div class="nj-presets">
+      <button class="app-chip active" data-p="inf">دون حد زمني</button>
+      <button class="app-chip" data-p="1h">ساعة واحدة</button>
+      <button class="app-chip" data-p="dl">أثناء التنزيل</button>
+      <button class="app-chip" id="njLidBtn">💻 السماح بغطاء الشاشة المغلق</button>
+    </div>
+    <span class="demo-hint">💡 انقر فوق رمز الكوب للتبديل بين الحالات أو اختر مدة زمنية</span>
+  </div>
+  <p class="demo-note">محاكاة بصرية. في تطبيق Mac، يمنع Nightjar سكون النظام بأمان وينبهك إذا تراجعت البطارية.</p>
+</div>
+<script>
+(function () {
+  var card = document.getElementById('njCard'), icon = document.getElementById('njIcon');
+  var status = document.getElementById('njStatus'), sub = document.getElementById('njSub');
+  var lidBtn = document.getElementById('njLidBtn');
+  var isAwake = true;
+  function toggle() {
+    isAwake = !isAwake;
+    card.classList.toggle('asleep', !isAwake);
+    card.setAttribute('aria-pressed', isAwake);
+    if (isAwake) {
+      icon.textContent = '☕'; status.textContent = "جهاز Mac في وضع الاستيقاظ"; sub.textContent = "الشاشة والنظام يعملان دون انقطاع";
+    } else {
+      icon.textContent = '🌙'; status.textContent = "وضع السكون العادي"; sub.textContent = "إعدادات توفير الطاقة نشطة";
+    }
+  }
+  card.addEventListener('click', toggle);
+  card.addEventListener('keydown', function(ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggle(); } });
+  if (lidBtn) lidBtn.addEventListener('click', function() { lidBtn.classList.toggle('active'); });
+  document.querySelectorAll('.nj-presets .app-chip').forEach(function(b) {
+    if (b === lidBtn) return;
+    b.addEventListener('click', function() {
+      document.querySelectorAll('.nj-presets .app-chip').forEach(function(x) { if (x !== lidBtn) x.classList.remove('active'); });
+      b.classList.add('active'); if (!isAwake) toggle();
+    });
+  });
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -135,6 +181,48 @@ nightjar://toggle</code></pre>
   <pre dir="ltr"><code>"/Applications/Nightjar.app/Contents/MacOS/Nightjar" --activate --minutes=30</code></pre>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>أدوات منع السكون التقليدية مقابل Nightjar</h2>
+  <p class="section-lead">حافظ على استيقاظ جهاز Mac بموثوقية دون استنزاف البطارية أو الفشل غير المعلن.</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>الجانب</th>
+          <th>الأدوات التقليدية</th>
+          <th class="highlight-col">Nightjar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>الشفافية والصدق</strong></td>
+          <td>تفشل بهدوء عندما تفرض سياسات المؤسسة سكون الشاشة</td>
+          <td class="highlight-col"><strong>يبلغك فوراً وبصدق عندما يتجاوز نظام macOS أمر منع السكون</strong></td>
+        </tr>
+        <tr>
+          <td><strong>غطاء الشاشة المغلق</strong></td>
+          <td>ينام الجهاز فجأة أو يسخن بشدة عند إغلاق الغطاء</td>
+          <td class="highlight-col"><strong>مساعد آمن يتيح مواصلة التحميلات أثناء إغلاق الشاشة بأمان</strong></td>
+        </tr>
+        <tr>
+          <td><strong>حماية البطارية</strong></td>
+          <td>يستنزف بطارية MacBook بالكامل حتى 0% عند النسيان</td>
+          <td class="highlight-col"><strong>يوقف منع السكون تلقائياً إذا انخفضت البطارية عن الحد الآمن</strong></td>
+        </tr>
+        <tr>
+          <td><strong>الشروط الذكية</strong></td>
+          <td>تشغيل وإيقاف يدوي فقط في كل مرة</td>
+          <td class="highlight-col"><strong>قواعد تلقائية: أثناء التنزيل أو عند الاتصال بشبكة محددة</strong></td>
+        </tr>
+        <tr>
+          <td><strong>الصلاحيات</strong></td>
+          <td>تتطلب برامج خلفية بصلاحيات الجذر (root) المعقدة</td>
+          <td class="highlight-col"><strong>أوامر نظام macOS القياسية دون الحاجة لأي صلاحيات إضافية</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>الخصوصية في فقرة واحدة</h2>
   <p>يُبقي Nightjar مفتوحةً إعلانات الطاقة (power assertions) التي يوفرها macOS أصلًا. لا يقرأ شيئًا عنك، ولا يُجري أي اتصال بالشبكة إطلاقًا، وليس فيه حساب. تُحفظ إعداداتك في حاوية العزل (sandbox) الخاصة بالتطبيق. وتقول <a href="privacy.html">سياسة الخصوصية</a> الكاملة الشيء نفسه بتفصيل أكبر.</p>

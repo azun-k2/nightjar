@@ -54,6 +54,7 @@
 <body>
 <main>
 <div class="hero">
+  <div class="hero-pill">⚡ Vizualno odbrojavanje budnosti · Iskren status kad macOS ode na spavanje</div>
   <div class="icon"><img src="../icon-512.png" alt="" width="512" height="512"></div>
   <h1>Nightjar</h1>
   <p class="tagline">Držite svoj Mac budnim. Iskreno.</p>
@@ -108,6 +109,51 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="nightjar-stage" role="group" aria-label="Interaktivni demo: prebacite stanje budnosti i zatvoreni poklopac">
+    <div id="njCard" class="nj-cup-card" role="button" tabindex="0" aria-pressed="true">
+      <div class="nj-icon" id="njIcon">☕</div>
+      <div class="nj-status-text" id="njStatus">Mac ostaje budan</div>
+      <div class="nj-sub-text" id="njSub">Zaslon i sustav rade bez prekida</div>
+    </div>
+    <div class="nj-presets">
+      <button class="app-chip active" data-p="inf">Neograničeno</button>
+      <button class="app-chip" data-p="1h">1 Sat</button>
+      <button class="app-chip" data-p="dl">Tijekom preuzimanja</button>
+      <button class="app-chip" id="njLidBtn">💻 Dopusti zatvoreni poklopac</button>
+    </div>
+    <span class="demo-hint">💡 Kliknite na šalicu za promjenu stanja ili odaberite trajanje</span>
+  </div>
+  <p class="demo-note">Vizualna simulacija. U Mac aplikaciji Nightjar pouzdano sprječava spavanje i štiti bateriju od pražnjenja.</p>
+</div>
+<script>
+(function () {
+  var card = document.getElementById('njCard'), icon = document.getElementById('njIcon');
+  var status = document.getElementById('njStatus'), sub = document.getElementById('njSub');
+  var lidBtn = document.getElementById('njLidBtn');
+  var isAwake = true;
+  function toggle() {
+    isAwake = !isAwake;
+    card.classList.toggle('asleep', !isAwake);
+    card.setAttribute('aria-pressed', isAwake);
+    if (isAwake) {
+      icon.textContent = '☕'; status.textContent = "Mac ostaje budan"; sub.textContent = "Zaslon i sustav rade bez prekida";
+    } else {
+      icon.textContent = '🌙'; status.textContent = "Uobičajeni macOS san"; sub.textContent = "Standardna ušteda energije aktivna";
+    }
+  }
+  card.addEventListener('click', toggle);
+  card.addEventListener('keydown', function(ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggle(); } });
+  if (lidBtn) lidBtn.addEventListener('click', function() { lidBtn.classList.toggle('active'); });
+  document.querySelectorAll('.nj-presets .app-chip').forEach(function(b) {
+    if (b === lidBtn) return;
+    b.addEventListener('click', function() {
+      document.querySelectorAll('.nj-presets .app-chip').forEach(function(x) { if (x !== lidBtn) x.classList.remove('active'); });
+      b.classList.add('active'); if (!isAwake) toggle();
+    });
+  });
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -135,6 +181,48 @@ nightjar://toggle</code></pre>
   <pre><code>"/Applications/Nightjar.app/Contents/MacOS/Nightjar" --activate --minutes=30</code></pre>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>Tradicionalni alati u odnosu na Nightjar</h2>
+  <p class="section-lead">Održavajte Mac budnim pouzdano i bez neočekivanog pražnjenja baterije.</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Značajka</th>
+          <th>Tradicionalni alati</th>
+          <th class="highlight-col">Nightjar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Iskren status</strong></td>
+          <td>Ne uspijevaju bez najave ako korporativna pravila nametnu spavanje</td>
+          <td class="highlight-col"><strong>Otvoreno javlja kada macOS nadjača sprječavanje spavanja</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Zatvoreni poklopac</strong></td>
+          <td>Mac odmah odlazi na spavanje i prekida rad pri zatvaranju poklopca</td>
+          <td class="highlight-col"><strong>Siguran pomoćnik omogućuje nastavak preuzimanja i sa zatvorenim poklopcem</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Zaštita baterije</strong></td>
+          <td>Isprazni bateriju MacBooka na 0% ako ga zaboravite isključiti</td>
+          <td class="highlight-col"><strong>Automatski otpušta blokadu spavanja kada baterija padne ispod praga</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Pametna pravila</strong></td>
+          <td>Samo ručno uključivanje i isključivanje klikom</td>
+          <td class="highlight-col"><strong>Automatska pravila: tijekom preuzimanja, na odabranom Wi-Fi-ju ili uz pokrenutu aplikaciju</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Dozvole</strong></td>
+          <td>Zahtijeva složene pozadinske procese s root ovlastima</td>
+          <td class="highlight-col"><strong>Standardne macOS naredbe bez potrebe za administratorskim pravima</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>Privatnost u jednom odlomku</h2>
   <p>Nightjar drži otvorenima zahtjeve za napajanje koje macOS već nudi. Ne čita ništa o vama, ne uspostavlja nikakvu mrežnu vezu i nema račun. Vaše postavke nalaze se u vlastitom sandbox spremniku aplikacije. Potpuna <a href="privacy.html">pravila privatnosti</a> govore isto, opširnije.</p>

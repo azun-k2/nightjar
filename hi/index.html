@@ -54,6 +54,7 @@
 <body>
 <main>
 <div class="hero">
+  <div class="hero-pill">⚡ विज़ुअल अवेक काउंटडाउन · अगर macOS सो जाए तो ईमानदार रिपोर्ट</div>
   <div class="icon"><img src="../icon-512.png" alt="" width="512" height="512"></div>
   <h1>Nightjar</h1>
   <p class="tagline">अपने Mac को जगाए रखें। ईमानदारी से।</p>
@@ -108,6 +109,51 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="nightjar-stage" role="group" aria-label="इंटरएक्टिव डेमो: जागृत अवस्था और बंद लिड टॉगल करें">
+    <div id="njCard" class="nj-cup-card" role="button" tabindex="0" aria-pressed="true">
+      <div class="nj-icon" id="njIcon">☕</div>
+      <div class="nj-status-text" id="njStatus">Mac जाग रहा है</div>
+      <div class="nj-sub-text" id="njSub">डिस्प्ले और सिस्टम बिना रुकावट चालू</div>
+    </div>
+    <div class="nj-presets">
+      <button class="app-chip active" data-p="inf">अनिश्चित काल</button>
+      <button class="app-chip" data-p="1h">1 घंटा</button>
+      <button class="app-chip" data-p="dl">डाउनलोड करते समय</button>
+      <button class="app-chip" id="njLidBtn">💻 बंद ढक्कन की अनुमति है</button>
+    </div>
+    <span class="demo-hint">💡 स्थिति बदलने के लिए कप आइकन पर क्लिक करें या समय चुनें</span>
+  </div>
+  <p class="demo-note">विज़ुअल सिमुलेशन। Mac ऐप में, Nightjar वास्तविक ऊर्जा निर्देश बनाता है और बैटरी कम होने पर चेतावनी देता है।</p>
+</div>
+<script>
+(function () {
+  var card = document.getElementById('njCard'), icon = document.getElementById('njIcon');
+  var status = document.getElementById('njStatus'), sub = document.getElementById('njSub');
+  var lidBtn = document.getElementById('njLidBtn');
+  var isAwake = true;
+  function toggle() {
+    isAwake = !isAwake;
+    card.classList.toggle('asleep', !isAwake);
+    card.setAttribute('aria-pressed', isAwake);
+    if (isAwake) {
+      icon.textContent = '☕'; status.textContent = "Mac जाग रहा है"; sub.textContent = "डिस्प्ले और सिस्टम बिना रुकावट चालू";
+    } else {
+      icon.textContent = '🌙'; status.textContent = "सामान्य macOS स्लीप"; sub.textContent = "मानक ऊर्जा बचत मोड सक्रिय";
+    }
+  }
+  card.addEventListener('click', toggle);
+  card.addEventListener('keydown', function(ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggle(); } });
+  if (lidBtn) lidBtn.addEventListener('click', function() { lidBtn.classList.toggle('active'); });
+  document.querySelectorAll('.nj-presets .app-chip').forEach(function(b) {
+    if (b === lidBtn) return;
+    b.addEventListener('click', function() {
+      document.querySelectorAll('.nj-presets .app-chip').forEach(function(x) { if (x !== lidBtn) x.classList.remove('active'); });
+      b.classList.add('active'); if (!isAwake) toggle();
+    });
+  });
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -135,6 +181,48 @@ nightjar://toggle</code></pre>
   <pre><code>"/Applications/Nightjar.app/Contents/MacOS/Nightjar" --activate --minutes=30</code></pre>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>पारंपरिक कीप-अवेक टूल्स बनाम Nightjar</h2>
+  <p class="section-lead">बैटरी खत्म होने के डर के बिना अपने Mac को मज़बूती से जगाए रखें।</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>पहलू</th>
+          <th>पारंपरिक उपकरण</th>
+          <th class="highlight-col">Nightjar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>सटीक स्थिति</strong></td>
+          <td>कॉर्पोरेट नीतियां लागू होने पर चुपचाप विफल हो जाते हैं</td>
+          <td class="highlight-col"><strong>macOS द्वारा स्लीप ओवरराइड किए जाने पर स्पष्ट रूप से सूचित करता है</strong></td>
+        </tr>
+        <tr>
+          <td><strong>बंद लिड</strong></td>
+          <td>स्क्रीन बंद होते ही Mac सो जाता है और कार्य रुक जाता है</td>
+          <td class="highlight-col"><strong>स्क्रीन बंद होने पर भी डाउनलोड और वीडियो एक्सपोर्ट चालू रखता है</strong></td>
+        </tr>
+        <tr>
+          <td><strong>बैटरी सुरक्षा</strong></td>
+          <td>भूल जाने पर लैपटॉप की बैटरी 0% तक ख़त्म कर देता है</td>
+          <td class="highlight-col"><strong>बैटरी कम होने पर अपने आप स्लीप लॉक हटा देता है</strong></td>
+        </tr>
+        <tr>
+          <td><strong>स्मार्ट नियम</strong></td>
+          <td>केवल मैन्युअल रूप से चालू और बंद करना</td>
+          <td class="highlight-col"><strong>स्वचालित नियम: डाउनलोडिंग के दौरान या चुने हुए ऐप के खुले होने पर</strong></td>
+        </tr>
+        <tr>
+          <td><strong>अनुमतियाँ</strong></td>
+          <td>जटिल रूट अनुमतियों और बैकग्राउंड डेमन्स की आवश्यकता</td>
+          <td class="highlight-col"><strong>रूट अनुमति के बिना मानक macOS सिस्टम पावर फ़ंक्शंस</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>गोपनीयता, एक अनुच्छेद में</h2>
   <p>Nightjar वही पावर असर्शन खुले रखता है जो macOS पहले से देता है। यह आपके बारे में कुछ नहीं पढ़ता, कोई नेटवर्क कनेक्शन नहीं बनाता, और इसमें कोई अकाउंट नहीं है। आपकी सेटिंग्ज़ ऐप के अपने सैंडबॉक्स कंटेनर में रहती हैं। पूरी <a href="privacy.html">गोपनीयता नीति</a> यही बात विस्तार से कहती है।</p>

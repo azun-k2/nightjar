@@ -54,6 +54,7 @@
 <body>
 <main>
 <div class="hero">
+  <div class="hero-pill">⚡ Visuaalinen hereilläolo-ajastin · Rehellinen tila jos macOS menee nukkumaan</div>
   <div class="icon"><img src="../icon-512.png" alt="" width="512" height="512"></div>
   <h1>Nightjar</h1>
   <p class="tagline">Pidä Mac hereillä. Rehellisesti.</p>
@@ -108,6 +109,51 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="nightjar-stage" role="group" aria-label="Interaktiivinen demo: vaihda hereilläolotilaa ja suljetun kannen tilaa">
+    <div id="njCard" class="nj-cup-card" role="button" tabindex="0" aria-pressed="true">
+      <div class="nj-icon" id="njIcon">☕</div>
+      <div class="nj-status-text" id="njStatus">Mac pysyy hereillä</div>
+      <div class="nj-sub-text" id="njSub">Näyttö ja järjestelmä toimivat keskeytyksettä</div>
+    </div>
+    <div class="nj-presets">
+      <button class="app-chip active" data-p="inf">Toistaiseksi</button>
+      <button class="app-chip" data-p="1h">1 Tunti</button>
+      <button class="app-chip" data-p="dl">Latauksen aikana</button>
+      <button class="app-chip" id="njLidBtn">💻 Kansi suljettuna sallittu</button>
+    </div>
+    <span class="demo-hint">💡 Napsauta kuppia vaihtaaksesi tilaa tai valitse kesto</span>
+  </div>
+  <p class="demo-note">Visuaalinen simulaatio. Mac-sovelluksessa Nightjar estää lepotilan luotettavasti ja suojaa akkua.</p>
+</div>
+<script>
+(function () {
+  var card = document.getElementById('njCard'), icon = document.getElementById('njIcon');
+  var status = document.getElementById('njStatus'), sub = document.getElementById('njSub');
+  var lidBtn = document.getElementById('njLidBtn');
+  var isAwake = true;
+  function toggle() {
+    isAwake = !isAwake;
+    card.classList.toggle('asleep', !isAwake);
+    card.setAttribute('aria-pressed', isAwake);
+    if (isAwake) {
+      icon.textContent = '☕'; status.textContent = "Mac pysyy hereillä"; sub.textContent = "Näyttö ja järjestelmä toimivat keskeytyksettä";
+    } else {
+      icon.textContent = '🌙'; status.textContent = "macOS:n normaali lepotila"; sub.textContent = "Normaali virransäästö käytössä";
+    }
+  }
+  card.addEventListener('click', toggle);
+  card.addEventListener('keydown', function(ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggle(); } });
+  if (lidBtn) lidBtn.addEventListener('click', function() { lidBtn.classList.toggle('active'); });
+  document.querySelectorAll('.nj-presets .app-chip').forEach(function(b) {
+    if (b === lidBtn) return;
+    b.addEventListener('click', function() {
+      document.querySelectorAll('.nj-presets .app-chip').forEach(function(x) { if (x !== lidBtn) x.classList.remove('active'); });
+      b.classList.add('active'); if (!isAwake) toggle();
+    });
+  });
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -135,6 +181,48 @@ nightjar://toggle</code></pre>
   <pre><code>"/Applications/Nightjar.app/Contents/MacOS/Nightjar" --activate --minutes=30</code></pre>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>Perinteiset hereilläpitotyökalut verrattuna Nightjariin</h2>
+  <p class="section-lead">Pidä Macisi luotettavasti hereillä ilman akun yllättävää tyhjenemistä.</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Ominaisuus</th>
+          <th>Perinteiset työkalut</th>
+          <th class="highlight-col">Nightjar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Rehellinen tila</strong></td>
+          <td>Epäonnistuvat hiljaa jos yrityksen profiilit pakottavat lepotilan</td>
+          <td class="highlight-col"><strong>Kertoo suoraan jos macOS ohittaa lepotilan eston</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Kansi suljettuna</strong></td>
+          <td>Mac menee heti lepotilaan ja keskeyttää työt kannen sulkeutuessa</td>
+          <td class="highlight-col"><strong>Turvallinen apuri pitää lataukset ja viennit käynnissä kansi suljettuna</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Akkusuojaus</strong></td>
+          <td>Kuluttaa kannettavan akun 0%:iin jos unohdat sen päälle</td>
+          <td class="highlight-col"><strong>Vapauttaa lepotilan eston automaattisesti akun varauksen laskiessa</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Älykkäät ehdot</strong></td>
+          <td>Vain manuaalinen päälle ja pois -kytkentä</td>
+          <td class="highlight-col"><strong>Automaattiset säännöt: latauksen aikana, tietyssä Wi-Fi-verkossa tai sovelluksen ollessa auki</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Käyttöoikeudet</strong></td>
+          <td>Vaativat monimutkaisia taustaprosesseja ja pääkäyttäjäoikeuksia</td>
+          <td class="highlight-col"><strong>Vakio macOS-järjestelmäkutsut ilman pääkäyttäjän oikeuksia</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>Tietosuoja yhdessä kappaleessa</h2>
   <p>Nightjar pitää auki virta-assertioita, joita macOS jo valmiiksi tarjoaa. Se ei lue sinusta mitään, ei muodosta mitään verkkoyhteyttä eikä vaadi tiliä. Asetuksesi säilyvät apin omassa hiekkalaatikkosäiliössä. Koko <a href="privacy.html">tietosuojakäytäntö</a> sanoo saman pidemmin.</p>

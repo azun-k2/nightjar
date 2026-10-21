@@ -54,6 +54,7 @@
 <body>
 <main>
 <div class="hero">
+  <div class="hero-pill">⚡ 直觀的保持喚醒倒數 · macOS 休眠時誠實透明回報</div>
   <div class="icon"><img src="../icon-512.png" alt="" width="512" height="512"></div>
   <h1>Nightjar</h1>
   <p class="tagline">讓你的 Mac 保持喚醒。實話實說。</p>
@@ -108,6 +109,51 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="nightjar-stage" role="group" aria-label="互動式演示：切換保持喚醒狀態與闔蓋防休眠模擬">
+    <div id="njCard" class="nj-cup-card" role="button" tabindex="0" aria-pressed="true">
+      <div class="nj-icon" id="njIcon">☕</div>
+      <div class="nj-status-text" id="njStatus">Mac 保持喚醒中</div>
+      <div class="nj-sub-text" id="njSub">顯示器與系統程序順暢運行無中斷</div>
+    </div>
+    <div class="nj-presets">
+      <button class="app-chip active" data-p="inf">無限期</button>
+      <button class="app-chip" data-p="1h">1 小時</button>
+      <button class="app-chip" data-p="dl">下載檔案期間</button>
+      <button class="app-chip" id="njLidBtn">💻 允許闔上螢幕繼續運行</button>
+    </div>
+    <span class="demo-hint">💡 點選上方咖啡杯圖示切換狀態，或選擇喚醒時長</span>
+  </div>
+  <p class="demo-note">此為網頁互動演示。在 Mac 客戶端中，Nightjar 使用原生電源斷言阻止休眠，並在電量過低時安全釋放。</p>
+</div>
+<script>
+(function () {
+  var card = document.getElementById('njCard'), icon = document.getElementById('njIcon');
+  var status = document.getElementById('njStatus'), sub = document.getElementById('njSub');
+  var lidBtn = document.getElementById('njLidBtn');
+  var isAwake = true;
+  function toggle() {
+    isAwake = !isAwake;
+    card.classList.toggle('asleep', !isAwake);
+    card.setAttribute('aria-pressed', isAwake);
+    if (isAwake) {
+      icon.textContent = '☕'; status.textContent = "Mac 保持喚醒中"; sub.textContent = "顯示器與系統程序順暢運行無中斷";
+    } else {
+      icon.textContent = '🌙'; status.textContent = "macOS 正常睡眠"; sub.textContent = "標準節能省電策略已生效";
+    }
+  }
+  card.addEventListener('click', toggle);
+  card.addEventListener('keydown', function(ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggle(); } });
+  if (lidBtn) lidBtn.addEventListener('click', function() { lidBtn.classList.toggle('active'); });
+  document.querySelectorAll('.nj-presets .app-chip').forEach(function(b) {
+    if (b === lidBtn) return;
+    b.addEventListener('click', function() {
+      document.querySelectorAll('.nj-presets .app-chip').forEach(function(x) { if (x !== lidBtn) x.classList.remove('active'); });
+      b.classList.add('active'); if (!isAwake) toggle();
+    });
+  });
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -135,6 +181,48 @@ nightjar://toggle</code></pre>
   <pre><code>"/Applications/Nightjar.app/Contents/MacOS/Nightjar" --activate --minutes=30</code></pre>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>傳統防休眠工具與 Nightjar 的對比</h2>
+  <p class="section-lead">讓您的 Mac 保持可靠清醒，無需擔憂電池悄然耗盡或任務暗中中斷。</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>特性</th>
+          <th>傳統防休眠工具</th>
+          <th class="highlight-col">Nightjar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>狀態真實性</strong></td>
+          <td>當企業管理策略強制睡眠時，暗中失效無任何提示</td>
+          <td class="highlight-col"><strong>當 macOS 忽略或重寫防休眠指令時，誠實明確地給出警告</strong></td>
+        </tr>
+        <tr>
+          <td><strong>闔蓋離線</strong></td>
+          <td>闔上筆記型電腦螢幕瞬間 Mac 強制睡眠，匯出和算圖被迫中斷</td>
+          <td class="highlight-col"><strong>安全闔蓋助手讓背景大檔案下載與影片匯出在闔蓋時依然穩定運行</strong></td>
+        </tr>
+        <tr>
+          <td><strong>電池保護</strong></td>
+          <td>若忘記手動關閉，會悄悄將 MacBook 電池電量耗盡至 0%</td>
+          <td class="highlight-col"><strong>當電池電量降至預設安全閾值以下時，自動釋放休眠鎖定保護電池</strong></td>
+        </tr>
+        <tr>
+          <td><strong>智慧觸發</strong></td>
+          <td>僅支援手動點選開啟或關閉</td>
+          <td class="highlight-col"><strong>支援自動化規則：下載時自動防休眠、連線特定 Wi-Fi 或開啟某應用時觸發</strong></td>
+        </tr>
+        <tr>
+          <td><strong>系統權限</strong></td>
+          <td>需要複雜的 Root 權限背景守護程序或核心驅動</td>
+          <td class="highlight-col"><strong>採用 macOS 原生標準使用者空間電源斷言，完全無需 Root 管理員權限</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>一段話講清隱私</h2>
   <p>Nightjar 只是保持 macOS 本身提供的電源斷言。它不讀取任何關於你的資訊，完全不進行網路連線，也沒有帳號。你的設定儲存在 App 自己的沙盒容器裡。完整的<a href="privacy.html">隱私權政策</a>把同樣的事講得更詳細。</p>

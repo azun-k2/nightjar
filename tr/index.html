@@ -54,6 +54,7 @@
 <body>
 <main>
 <div class="hero">
+  <div class="hero-pill">⚡ Görsel uyanık kalma geri sayımı · macOS uyuduğunda dürüst durum bildirimi</div>
   <div class="icon"><img src="../icon-512.png" alt="" width="512" height="512"></div>
   <h1>Nightjar</h1>
   <p class="tagline">Mac'ini uyanık tut. Dürüstçe.</p>
@@ -108,6 +109,51 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="nightjar-stage" role="group" aria-label="Etkileşimli demo: uyanık kalma durumunu ve kapalı kapak simülasyonunu değiştirin">
+    <div id="njCard" class="nj-cup-card" role="button" tabindex="0" aria-pressed="true">
+      <div class="nj-icon" id="njIcon">☕</div>
+      <div class="nj-status-text" id="njStatus">Mac Uyanık</div>
+      <div class="nj-sub-text" id="njSub">Ekran ve sistem kesintisiz aktif</div>
+    </div>
+    <div class="nj-presets">
+      <button class="app-chip active" data-p="inf">Süresiz</button>
+      <button class="app-chip" data-p="1h">1 Saat</button>
+      <button class="app-chip" data-p="dl">İndirme Sırasında</button>
+      <button class="app-chip" id="njLidBtn">💻 Kapalı Kapağa İzin Ver</button>
+    </div>
+    <span class="demo-hint">💡 Durumu değiştirmek için fincan simgesine tıklayın veya bir süre seçin</span>
+  </div>
+  <p class="demo-note">Görsel simülasyon. Mac uygulamasında Nightjar sistemi gerçekten uyanık tutar ve pil azaldığında uyarır.</p>
+</div>
+<script>
+(function () {
+  var card = document.getElementById('njCard'), icon = document.getElementById('njIcon');
+  var status = document.getElementById('njStatus'), sub = document.getElementById('njSub');
+  var lidBtn = document.getElementById('njLidBtn');
+  var isAwake = true;
+  function toggle() {
+    isAwake = !isAwake;
+    card.classList.toggle('asleep', !isAwake);
+    card.setAttribute('aria-pressed', isAwake);
+    if (isAwake) {
+      icon.textContent = '☕'; status.textContent = "Mac Uyanık"; sub.textContent = "Ekran ve sistem kesintisiz aktif";
+    } else {
+      icon.textContent = '🌙'; status.textContent = "Normal macOS Uykusu"; sub.textContent = "Standart enerji tasarrufu devrede";
+    }
+  }
+  card.addEventListener('click', toggle);
+  card.addEventListener('keydown', function(ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggle(); } });
+  if (lidBtn) lidBtn.addEventListener('click', function() { lidBtn.classList.toggle('active'); });
+  document.querySelectorAll('.nj-presets .app-chip').forEach(function(b) {
+    if (b === lidBtn) return;
+    b.addEventListener('click', function() {
+      document.querySelectorAll('.nj-presets .app-chip').forEach(function(x) { if (x !== lidBtn) x.classList.remove('active'); });
+      b.classList.add('active'); if (!isAwake) toggle();
+    });
+  });
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -135,6 +181,48 @@ nightjar://toggle</code></pre>
   <pre><code>"/Applications/Nightjar.app/Contents/MacOS/Nightjar" --activate --minutes=30</code></pre>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>Geleneksel uyanık tutma araçları ile Nightjar karşılaştırması</h2>
+  <p class="section-lead">Beklenmedik pil tükenmesi veya gizli kesintiler olmadan Mac'inizi güvenle uyanık tutun.</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Özellik</th>
+          <th>Geleneksel Araçlar</th>
+          <th class="highlight-col">Nightjar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Durum Dürüstlüğü</strong></td>
+          <td>Şirket ilkeleri uykuyu zorladığında sessizce başarısız olur</td>
+          <td class="highlight-col"><strong>macOS uyanık kalma kilidini geçersiz kıldığında dürüstçe bildirir</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Kapalı Kapak</strong></td>
+          <td>Kapak kapatıldığında Mac hemen uyur ve indirmeler yarıda kalır</td>
+          <td class="highlight-col"><strong>Güvenli yardımcı, kapak kapalıyken bile indirme ve dışa aktarmaları sürdürür</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Pil Güvenliği</strong></td>
+          <td>Unutursanız MacBook pilini %0'a kadar tüketir</td>
+          <td class="highlight-col"><strong>Pil seviyesi eşiğin altına düşerse uyanık tutma kilidini otomatik olarak bırakır</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Akıllı Kurallar</strong></td>
+          <td>Yalnızca fare tıklamasıyla manuel açma ve kapama</td>
+          <td class="highlight-col"><strong>Otomatik kurallar: dosya indirirken, belirli Wi-Fi'da veya açık uygulama varken</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Ayrıcalıklar</strong></td>
+          <td>Root yetkisine sahip karmaşık arka plan süreçleri gerektirir</td>
+          <td class="highlight-col"><strong>Yönetici iznine gerek kalmadan standart macOS güç komutları</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>Tek paragrafta gizlilik</h2>
   <p>Nightjar, macOS'in zaten sunduğu güç bildirimlerini (power assertions) açık tutar. Senin hakkında hiçbir şey okumaz, hiçbir ağ bağlantısı kurmaz ve hesabı yoktur. Ayarların uygulamanın kendi sandbox kapsayıcısında durur. Tam <a href="privacy.html">gizlilik politikası</a> aynı şeyi daha ayrıntılı anlatır.</p>

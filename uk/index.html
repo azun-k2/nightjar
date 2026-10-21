@@ -54,6 +54,7 @@
 <body>
 <main>
 <div class="hero">
+  <div class="hero-pill">⚡ Візуальний таймер неспання · Чесний звіт, коли macOS переходить у сон</div>
   <div class="icon"><img src="../icon-512.png" alt="" width="512" height="512"></div>
   <h1>Nightjar</h1>
   <p class="tagline">Не дає Mac заснути. Чесно.</p>
@@ -108,6 +109,51 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="nightjar-stage" role="group" aria-label="Інтерактивне демо: перемикання неспання та закритої кришки">
+    <div id="njCard" class="nj-cup-card" role="button" tabindex="0" aria-pressed="true">
+      <div class="nj-icon" id="njIcon">☕</div>
+      <div class="nj-status-text" id="njStatus">Mac не спить</div>
+      <div class="nj-sub-text" id="njSub">Екран і система працюють безперервно</div>
+    </div>
+    <div class="nj-presets">
+      <button class="app-chip active" data-p="inf">Безстроково</button>
+      <button class="app-chip" data-p="1h">1 Година</button>
+      <button class="app-chip" data-p="dl">Під час завантаження</button>
+      <button class="app-chip" id="njLidBtn">💻 Дозволити закриту кришку</button>
+    </div>
+    <span class="demo-hint">💡 Натисніть на чашку, щоб змінити стан або виберіть тривалість</span>
+  </div>
+  <p class="demo-note">Візуальна симуляція. У додатку для Mac Nightjar надійно блокує сон і захищає батарею від розряджання.</p>
+</div>
+<script>
+(function () {
+  var card = document.getElementById('njCard'), icon = document.getElementById('njIcon');
+  var status = document.getElementById('njStatus'), sub = document.getElementById('njSub');
+  var lidBtn = document.getElementById('njLidBtn');
+  var isAwake = true;
+  function toggle() {
+    isAwake = !isAwake;
+    card.classList.toggle('asleep', !isAwake);
+    card.setAttribute('aria-pressed', isAwake);
+    if (isAwake) {
+      icon.textContent = '☕'; status.textContent = "Mac не спить"; sub.textContent = "Екран і система працюють безперервно";
+    } else {
+      icon.textContent = '🌙'; status.textContent = "Звичайний сон macOS"; sub.textContent = "Стандартне енергозбереження активне";
+    }
+  }
+  card.addEventListener('click', toggle);
+  card.addEventListener('keydown', function(ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggle(); } });
+  if (lidBtn) lidBtn.addEventListener('click', function() { lidBtn.classList.toggle('active'); });
+  document.querySelectorAll('.nj-presets .app-chip').forEach(function(b) {
+    if (b === lidBtn) return;
+    b.addEventListener('click', function() {
+      document.querySelectorAll('.nj-presets .app-chip').forEach(function(x) { if (x !== lidBtn) x.classList.remove('active'); });
+      b.classList.add('active'); if (!isAwake) toggle();
+    });
+  });
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -135,6 +181,48 @@ nightjar://toggle</code></pre>
   <pre><code>"/Applications/Nightjar.app/Contents/MacOS/Nightjar" --activate --minutes=30</code></pre>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>Традиційні утиліти для блокування сну та Nightjar</h2>
+  <p class="section-lead">Тримайте Mac у робочому стані без ризику несподіваного розрядження батареї.</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Характеристика</th>
+          <th>Традиційні утиліти</th>
+          <th class="highlight-col">Nightjar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Чесний статус</strong></td>
+          <td>Мовчки припиняють діяти, якщо корпоративні профілі примушують до сну</td>
+          <td class="highlight-col"><strong>Чесно сповіщає, коли macOS перехоплює контроль блокування сну</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Закрита кришка</strong></td>
+          <td>Mac раптово засинає при закритті кришки, зупиняючи експорт та завантаження</td>
+          <td class="highlight-col"><strong>Безпечний помічник дозволяє продовжувати завантаження при закритому екрані</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Захист батареї</strong></td>
+          <td>Розряджає акумулятор MacBook до 0%, якщо ви забули вимкнути блокування</td>
+          <td class="highlight-col"><strong>Автоматично дозволяє сон, коли рівень заряду опускається нижче порога</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Розумні умови</strong></td>
+          <td>Лише ручне вмикання та вимикання кнопкою</td>
+          <td class="highlight-col"><strong>Автоматичні правила: під час завантаження, у вибраній мережі Wi-Fi або відкритій програмі</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Привілеї</strong></td>
+          <td>Вимагають складних фонових процесів з правами root</td>
+          <td class="highlight-col"><strong>Стандартні команди живлення macOS без необхідності прав адміністратора</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>Конфіденційність в одному абзаці</h2>
   <p>Nightjar утримує твердження живлення (power assertions), які вже є в macOS. Він нічого не читає про вас, узагалі не під’єднується до мережі й не потребує облікового запису. Ваші параметри зберігаються у власному контейнері пісочниці застосунку. Повна <a href="privacy.html">політика конфіденційності</a> каже те саме, тільки докладніше.</p>

@@ -54,6 +54,7 @@
 <body>
 <main>
 <div class="hero">
+  <div class="hero-pill">⚡ Numărătoare inversă vizuală · Raportare sinceră când macOS intră în repaus</div>
   <div class="icon"><img src="../icon-512.png" alt="" width="512" height="512"></div>
   <h1>Nightjar</h1>
   <p class="tagline">Ține-ți Macul treaz. Sincer.</p>
@@ -108,6 +109,51 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="nightjar-stage" role="group" aria-label="Demonstrație interactivă: comutați starea trează și capacul închis">
+    <div id="njCard" class="nj-cup-card" role="button" tabindex="0" aria-pressed="true">
+      <div class="nj-icon" id="njIcon">☕</div>
+      <div class="nj-status-text" id="njStatus">Mac-ul este treaz</div>
+      <div class="nj-sub-text" id="njSub">Ecranul și sistemul rulează neîntrerupt</div>
+    </div>
+    <div class="nj-presets">
+      <button class="app-chip active" data-p="inf">Nelimitat</button>
+      <button class="app-chip" data-p="1h">1 Oră</button>
+      <button class="app-chip" data-p="dl">În timpul descărcării</button>
+      <button class="app-chip" id="njLidBtn">💻 Permite cu ecranul închis</button>
+    </div>
+    <span class="demo-hint">💡 Faceți clic pe ceașcă pentru a comuta starea sau alegeți o durată</span>
+  </div>
+  <p class="demo-note">Simulare vizuală. În aplicația pentru Mac, Nightjar menține sistemul treaz în mod sigur și protejează bateria.</p>
+</div>
+<script>
+(function () {
+  var card = document.getElementById('njCard'), icon = document.getElementById('njIcon');
+  var status = document.getElementById('njStatus'), sub = document.getElementById('njSub');
+  var lidBtn = document.getElementById('njLidBtn');
+  var isAwake = true;
+  function toggle() {
+    isAwake = !isAwake;
+    card.classList.toggle('asleep', !isAwake);
+    card.setAttribute('aria-pressed', isAwake);
+    if (isAwake) {
+      icon.textContent = '☕'; status.textContent = "Mac-ul este treaz"; sub.textContent = "Ecranul și sistemul rulează neîntrerupt";
+    } else {
+      icon.textContent = '🌙'; status.textContent = "Repaus normal macOS"; sub.textContent = "Economisire standard de energie activă";
+    }
+  }
+  card.addEventListener('click', toggle);
+  card.addEventListener('keydown', function(ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggle(); } });
+  if (lidBtn) lidBtn.addEventListener('click', function() { lidBtn.classList.toggle('active'); });
+  document.querySelectorAll('.nj-presets .app-chip').forEach(function(b) {
+    if (b === lidBtn) return;
+    b.addEventListener('click', function() {
+      document.querySelectorAll('.nj-presets .app-chip').forEach(function(x) { if (x !== lidBtn) x.classList.remove('active'); });
+      b.classList.add('active'); if (!isAwake) toggle();
+    });
+  });
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -135,6 +181,48 @@ nightjar://toggle</code></pre>
   <pre><code>"/Applications/Nightjar.app/Contents/MacOS/Nightjar" --activate --minutes=30</code></pre>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>Instrumente tradiționale vs Nightjar</h2>
+  <p class="section-lead">Păstrați Mac-ul treaz în deplină siguranță, fără descărcarea bateriei din neatenție.</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Aspect</th>
+          <th>Instrumente clasice</th>
+          <th class="highlight-col">Nightjar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Sinceritate</strong></td>
+          <td>Eșuează silențios dacă politicile companiei impun repausul</td>
+          <td class="highlight-col"><strong>Raportează transparent când macOS ignoră comanda de menținere activă</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Capac închis</strong></td>
+          <td>Mac-ul intră brusc în repaus la închiderea clapetei, oprind sarcinile</td>
+          <td class="highlight-col"><strong>Asistent sigur care menține descărcările active și cu capacul închis</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Protecție baterie</strong></td>
+          <td>Descarcă bateria MacBook-ului până la 0% dacă uitați să-l opriți</td>
+          <td class="highlight-col"><strong>Permite automat repausul dacă bateria scade sub pragul setat</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Reguli inteligente</strong></td>
+          <td>Doar pornire și oprire manuală prin clic</td>
+          <td class="highlight-col"><strong>Reguli automate: în timpul descărcărilor, pe un anumit Wi-Fi sau cu aplicația deschisă</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Permisiuni</strong></td>
+          <td>Necesită procese de fundal complexe cu drepturi de root</td>
+          <td class="highlight-col"><strong>Instrucțiuni de energie standard macOS fără permisiuni de administrator</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>Confidențialitatea într-un paragraf</h2>
   <p>Nightjar ține deschise aserțiunile de energie pe care macOS le oferă deja. Nu citește nimic despre tine, nu face nicio conexiune la rețea și nu are cont. Configurările tale stau în containerul sandbox propriu al aplicației. <a href="privacy.html">Politica de confidențialitate</a> completă spune același lucru, mai pe larg.</p>

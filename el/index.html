@@ -54,6 +54,7 @@
 <body>
 <main>
 <div class="hero">
+  <div class="hero-pill">⚡ Οπτική αντίστροφη μέτρηση · Ειλικρινής κατάσταση όταν το macOS αναστέλλει</div>
   <div class="icon"><img src="../icon-512.png" alt="" width="512" height="512"></div>
   <h1>Nightjar</h1>
   <p class="tagline">Κρατήστε το Mac σας ξύπνιο. Με ειλικρίνεια.</p>
@@ -108,6 +109,51 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="nightjar-stage" role="group" aria-label="Διαδραστική επίδειξη: εναλλαγή κατάστασης αφύπνισης και κλειστού καπακιού">
+    <div id="njCard" class="nj-cup-card" role="button" tabindex="0" aria-pressed="true">
+      <div class="nj-icon" id="njIcon">☕</div>
+      <div class="nj-status-text" id="njStatus">Το Mac παραμένει ξύπνιο</div>
+      <div class="nj-sub-text" id="njSub">Οθόνη και σύστημα χωρίς διακοπή</div>
+    </div>
+    <div class="nj-presets">
+      <button class="app-chip active" data-p="inf">Επ' αόριστον</button>
+      <button class="app-chip" data-p="1h">1 Ώρα</button>
+      <button class="app-chip" data-p="dl">Κατά τη λήψη</button>
+      <button class="app-chip" id="njLidBtn">💻 Επιτρέπεται κλειστό καπάκι</button>
+    </div>
+    <span class="demo-hint">💡 Κάντε κλικ στο φλιτζάνι για εναλλαγή κατάστασης ή επιλέξτε διάρκεια</span>
+  </div>
+  <p class="demo-note">Οπτική προσομοίωση. Στην εφαρμογή Mac, το Nightjar διατηρεί το σύστημα σε εγρήγορση και προστατεύει την μπαταρία.</p>
+</div>
+<script>
+(function () {
+  var card = document.getElementById('njCard'), icon = document.getElementById('njIcon');
+  var status = document.getElementById('njStatus'), sub = document.getElementById('njSub');
+  var lidBtn = document.getElementById('njLidBtn');
+  var isAwake = true;
+  function toggle() {
+    isAwake = !isAwake;
+    card.classList.toggle('asleep', !isAwake);
+    card.setAttribute('aria-pressed', isAwake);
+    if (isAwake) {
+      icon.textContent = '☕'; status.textContent = "Το Mac παραμένει ξύπνιο"; sub.textContent = "Οθόνη και σύστημα χωρίς διακοπή";
+    } else {
+      icon.textContent = '🌙'; status.textContent = "Κανονική αναστολή macOS"; sub.textContent = "Τυπική εξοικονόμηση ενέργειας ενεργή";
+    }
+  }
+  card.addEventListener('click', toggle);
+  card.addEventListener('keydown', function(ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggle(); } });
+  if (lidBtn) lidBtn.addEventListener('click', function() { lidBtn.classList.toggle('active'); });
+  document.querySelectorAll('.nj-presets .app-chip').forEach(function(b) {
+    if (b === lidBtn) return;
+    b.addEventListener('click', function() {
+      document.querySelectorAll('.nj-presets .app-chip').forEach(function(x) { if (x !== lidBtn) x.classList.remove('active'); });
+      b.classList.add('active'); if (!isAwake) toggle();
+    });
+  });
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -135,6 +181,48 @@ nightjar://toggle</code></pre>
   <pre><code>"/Applications/Nightjar.app/Contents/MacOS/Nightjar" --activate --minutes=30</code></pre>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>Παραδοσιακά εργαλεία έναντι Nightjar</h2>
+  <p class="section-lead">Κρατήστε το Mac σας σε εγρήγορση αξιόπιστα χωρίς απροσδόκητη εξάντληση της μπαταρίας.</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Χαρακτηριστικό</th>
+          <th>Παραδοσιακά εργαλεία</th>
+          <th class="highlight-col">Nightjar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Ειλικρίνεια</strong></td>
+          <td>Αποτυγχάνουν αθόρυβα όταν εταιρικές ρυθμίσεις επιβάλλουν αναστολή</td>
+          <td class="highlight-col"><strong>Αναφέρει άμεσα όταν το macOS παρακάμπτει την αποτροπή αναστολής</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Κλειστό καπάκι</strong></td>
+          <td>Το Mac πέφτει απότομα σε αναστολή και διακόπτει εργασίες</td>
+          <td class="highlight-col"><strong>Ασφαλής βοηθός διατηρεί λήψεις και εξαγωγές ενεργές με κλειστό καπάκι</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Ασφάλεια μπαταρίας</strong></td>
+          <td>Εξαντλεί την μπαταρία του MacBook στο 0% αν ξεχαστεί</td>
+          <td class="highlight-col"><strong>Απελευθερώνει αυτόματα την αποτροπή όταν η μπαταρία πέσει κάτω από το όριο</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Έξυπνοι κανόνες</strong></td>
+          <td>Μόνο χειροκίνητη ενεργοποίηση και απενεργοποίηση</td>
+          <td class="highlight-col"><strong>Αυτόματη λειτουργία: κατά τη λήψη αρχείων ή με επιλεγμένη εφαρμογή</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Δικαιώματα</strong></td>
+          <td>Απαιτεί πολύπλοκες διεργασίες παρασκηνίου με δικαιώματα root</td>
+          <td class="highlight-col"><strong>Τυπικές εντολές ενέργειας του macOS χωρίς ανάγκη δικαιωμάτων root</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>Το απόρρητο σε μία παράγραφο</h2>
   <p>Το Nightjar κρατά ανοιχτές τις δηλώσεις ενέργειας (power assertions) που ήδη παρέχει το macOS. Δεν διαβάζει τίποτα για εσάς, δεν κάνει καμία απολύτως σύνδεση δικτύου και δεν έχει λογαριασμό. Οι ρυθμίσεις σας βρίσκονται στο απομονωμένο container (sandbox) της ίδιας της εφαρμογής. Η πλήρης <a href="privacy.html">πολιτική απορρήτου</a> λέει το ίδιο πράγμα πιο αναλυτικά.</p>

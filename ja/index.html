@@ -54,6 +54,7 @@
 <body>
 <main>
 <div class="hero">
+  <div class="hero-pill">⚡ 視覚的な覚醒カウントダウン · macOSがスリープした際も誠実に通知</div>
   <div class="icon"><img src="../icon-512.png" alt="" width="512" height="512"></div>
   <h1>Nightjar</h1>
   <p class="tagline">Mac をスリープさせない。正直に。</p>
@@ -108,6 +109,51 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="nightjar-stage" role="group" aria-label="インタラクティブデモ：覚醒状態とクラムシェル蓋閉じシミュレーション">
+    <div id="njCard" class="nj-cup-card" role="button" tabindex="0" aria-pressed="true">
+      <div class="nj-icon" id="njIcon">☕</div>
+      <div class="nj-status-text" id="njStatus">Macは覚醒中</div>
+      <div class="nj-sub-text" id="njSub">ディスプレイとシステムが途切れず稼働中</div>
+    </div>
+    <div class="nj-presets">
+      <button class="app-chip active" data-p="inf">無制限</button>
+      <button class="app-chip" data-p="1h">1時間</button>
+      <button class="app-chip" data-p="dl">ダウンロード中</button>
+      <button class="app-chip" id="njLidBtn">💻 クラムシェル蓋閉じ許可</button>
+    </div>
+    <span class="demo-hint">💡 カップをクリックして状態を切り替えるか、継続時間を選択してください</span>
+  </div>
+  <p class="demo-note">視覚的シミュレーションです。Macアプリ版では本物の電源アサーションを発行し、バッテリー低下時も安全に保護します。</p>
+</div>
+<script>
+(function () {
+  var card = document.getElementById('njCard'), icon = document.getElementById('njIcon');
+  var status = document.getElementById('njStatus'), sub = document.getElementById('njSub');
+  var lidBtn = document.getElementById('njLidBtn');
+  var isAwake = true;
+  function toggle() {
+    isAwake = !isAwake;
+    card.classList.toggle('asleep', !isAwake);
+    card.setAttribute('aria-pressed', isAwake);
+    if (isAwake) {
+      icon.textContent = '☕'; status.textContent = "Macは覚醒中"; sub.textContent = "ディスプレイとシステムが途切れず稼働中";
+    } else {
+      icon.textContent = '🌙'; status.textContent = "macOS通常スリープ"; sub.textContent = "標準の省エネルギー設定が有効";
+    }
+  }
+  card.addEventListener('click', toggle);
+  card.addEventListener('keydown', function(ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggle(); } });
+  if (lidBtn) lidBtn.addEventListener('click', function() { lidBtn.classList.toggle('active'); });
+  document.querySelectorAll('.nj-presets .app-chip').forEach(function(b) {
+    if (b === lidBtn) return;
+    b.addEventListener('click', function() {
+      document.querySelectorAll('.nj-presets .app-chip').forEach(function(x) { if (x !== lidBtn) x.classList.remove('active'); });
+      b.classList.add('active'); if (!isAwake) toggle();
+    });
+  });
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -135,6 +181,48 @@ nightjar://toggle</code></pre>
   <pre><code>"/Applications/Nightjar.app/Contents/MacOS/Nightjar" --activate --minutes=30</code></pre>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>従来のスリープ防止ツールとNightjarの比較</h2>
+  <p class="section-lead">バッテリーの過放電や通知のない失敗に悩まされることなく、Macを確実に覚醒状態に保ちます。</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>項目</th>
+          <th>従来のツール</th>
+          <th class="highlight-col">Nightjar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>状態の誠実さ</strong></td>
+          <td>会社プロファイルなどで強制スリープされた際に無言で失敗する</td>
+          <td class="highlight-col"><strong>macOSがスリープ抑止を無視した際、誤魔化さず誠実に警告</strong></td>
+        </tr>
+        <tr>
+          <td><strong>蓋閉じクラムシェル</strong></td>
+          <td>MacBookの蓋を閉じると突然スリープし書き出し処理が中断</td>
+          <td class="highlight-col"><strong>安全なヘルパーにより画面を閉じた状態でもダウンロードやレンダリングを継続</strong></td>
+        </tr>
+        <tr>
+          <td><strong>バッテリー保護</strong></td>
+          <td>切り忘れた場合にMacBookのバッテリー残量を0%まで使い果たす</td>
+          <td class="highlight-col"><strong>バッテリーが設定した閾値を下回ると自動的にスリープ抑止を解除</strong></td>
+        </tr>
+        <tr>
+          <td><strong>スマート条件</strong></td>
+          <td>クリックによる手動のオン・オフ切り替えのみ</td>
+          <td class="highlight-col"><strong>ダウンロード中、指定Wi-Fi接続時、特定アプリ起動時などの自動ルール</strong></td>
+        </tr>
+        <tr>
+          <td><strong>システム権限</strong></td>
+          <td>複雑な管理者（root）権限デーモンやドライバを要求する</td>
+          <td class="highlight-col"><strong>管理者権限不要、macOS標準の安全なユーザ空間APIのみで動作</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>ひと言でいうプライバシー</h2>
   <p>Nightjar は、macOS にもともと備わっている電源アサーションを保持するだけです。あなたについて何も読み取らず、ネットワークには一切接続せず、アカウントもありません。設定はアプリ専用のサンドボックスコンテナに保存されます。<a href="privacy.html">プライバシーポリシー</a>の全文では、同じことをより詳しく説明しています。</p>

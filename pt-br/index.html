@@ -54,6 +54,7 @@
 <body>
 <main>
 <div class="hero">
+  <div class="hero-pill">⚡ Contagem regressiva visual · Status honesto quando o macOS suspende o sistema</div>
   <div class="icon"><img src="../icon-512.png" alt="" width="512" height="512"></div>
   <h1>Nightjar</h1>
   <p class="tagline">Mantenha seu Mac acordado. Com honestidade.</p>
@@ -108,6 +109,51 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="nightjar-stage" role="group" aria-label="Demonstração interativa: alterne o estado acordado e tampa fechada">
+    <div id="njCard" class="nj-cup-card" role="button" tabindex="0" aria-pressed="true">
+      <div class="nj-icon" id="njIcon">☕</div>
+      <div class="nj-status-text" id="njStatus">O Mac está acordado</div>
+      <div class="nj-sub-text" id="njSub">Tela e sistema funcionando sem interrupções</div>
+    </div>
+    <div class="nj-presets">
+      <button class="app-chip active" data-p="inf">Indefinidamente</button>
+      <button class="app-chip" data-p="1h">1 Hora</button>
+      <button class="app-chip" data-p="dl">Durante downloads</button>
+      <button class="app-chip" id="njLidBtn">💻 Permitir com a tampa fechada</button>
+    </div>
+    <span class="demo-hint">💡 Clique na xícara para alternar o estado ou selecione uma duração</span>
+  </div>
+  <p class="demo-note">Simulação visual. No app para Mac, o Nightjar impede o repouso de verdade e alerta se a bateria estiver fraca.</p>
+</div>
+<script>
+(function () {
+  var card = document.getElementById('njCard'), icon = document.getElementById('njIcon');
+  var status = document.getElementById('njStatus'), sub = document.getElementById('njSub');
+  var lidBtn = document.getElementById('njLidBtn');
+  var isAwake = true;
+  function toggle() {
+    isAwake = !isAwake;
+    card.classList.toggle('asleep', !isAwake);
+    card.setAttribute('aria-pressed', isAwake);
+    if (isAwake) {
+      icon.textContent = '☕'; status.textContent = "O Mac está acordado"; sub.textContent = "Tela e sistema funcionando sem interrupções";
+    } else {
+      icon.textContent = '🌙'; status.textContent = "Repouso normal do macOS"; sub.textContent = "Economia de energia padrão ativa";
+    }
+  }
+  card.addEventListener('click', toggle);
+  card.addEventListener('keydown', function(ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggle(); } });
+  if (lidBtn) lidBtn.addEventListener('click', function() { lidBtn.classList.toggle('active'); });
+  document.querySelectorAll('.nj-presets .app-chip').forEach(function(b) {
+    if (b === lidBtn) return;
+    b.addEventListener('click', function() {
+      document.querySelectorAll('.nj-presets .app-chip').forEach(function(x) { if (x !== lidBtn) x.classList.remove('active'); });
+      b.classList.add('active'); if (!isAwake) toggle();
+    });
+  });
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -135,6 +181,48 @@ nightjar://toggle</code></pre>
   <pre><code>"/Applications/Nightjar.app/Contents/MacOS/Nightjar" --activate --minutes=30</code></pre>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>Ferramentas tradicionais vs Nightjar</h2>
+  <p class="section-lead">Mantenha seu Mac acordado com total confiança, sem drenar a bateria por engano.</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Aspecto</th>
+          <th>Ferramentas clássicas</th>
+          <th class="highlight-col">Nightjar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Transparência</strong></td>
+          <td>Falham em silêncio quando perfis corporativos forçam o repouso</td>
+          <td class="highlight-col"><strong>Informa com total honestidade se o macOS ignorar o bloqueio de repouso</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Tampa fechada</strong></td>
+          <td>O Mac dorme bruscamente ao fechar a tampa, cancelando tarefas</td>
+          <td class="highlight-col"><strong>Assistente seguro que mantém downloads e exportações rodando de tampa fechada</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Segurança da bateria</strong></td>
+          <td>Esgota a bateria do MacBook até 0% caso você se esqueça</td>
+          <td class="highlight-col"><strong>Libera o repouso automaticamente se a bateria cair abaixo do limite</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Gatilhos inteligentes</strong></td>
+          <td>Apenas ligar e desligar manualmente por clique</td>
+          <td class="highlight-col"><strong>Regras automáticas: durante downloads, em Wi-Fi específico ou app aberto</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Permissões</strong></td>
+          <td>Exigem daemons complexos em segundo plano com permissões root</td>
+          <td class="highlight-col"><strong>Comandos de energia padrão do macOS sem privilégios de administrador</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>Privacidade em um parágrafo</h2>
   <p>O Nightjar mantém abertas as asserções de energia que o próprio macOS oferece. Ele não lê nada sobre você, não faz nenhuma conexão de rede e não tem conta. Seus ajustes ficam no contêiner sandbox do próprio app. A <a href="privacy.html">política de privacidade</a> completa diz o mesmo com mais detalhes.</p>

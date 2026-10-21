@@ -54,6 +54,7 @@
 <body>
 <main>
 <div class="hero">
+  <div class="hero-pill">⚡ Kiraan detik terjaga visual · Status jujur apabila macOS tidur</div>
   <div class="icon"><img src="../icon-512.png" alt="" width="512" height="512"></div>
   <h1>Nightjar</h1>
   <p class="tagline">Pastikan Mac anda terus berjaga. Dengan jujur.</p>
@@ -108,6 +109,51 @@
   </details><!-- /family:nav -->
   </nav>
 </div>
+<div class="demo-wrapper" id="demo">
+  <div class="nightjar-stage" role="group" aria-label="Demo interaktif: togol status berjaga dan simulasi penutup ditutup">
+    <div id="njCard" class="nj-cup-card" role="button" tabindex="0" aria-pressed="true">
+      <div class="nj-icon" id="njIcon">☕</div>
+      <div class="nj-status-text" id="njStatus">Mac Sedang Terjaga</div>
+      <div class="nj-sub-text" id="njSub">Paparan dan sistem aktif tanpa gangguan</div>
+    </div>
+    <div class="nj-presets">
+      <button class="app-chip active" data-p="inf">Tanpa Had</button>
+      <button class="app-chip" data-p="1h">1 Jam</button>
+      <button class="app-chip" data-p="dl">Semasa Memuat Turun</button>
+      <button class="app-chip" id="njLidBtn">💻 Benarkan Penutup Ditutup</button>
+    </div>
+    <span class="demo-hint">💡 Klik ikon cawan untuk togol status atau pilih tempoh masa</span>
+  </div>
+  <p class="demo-note">Simulasi visual. Dalam aplikasi Mac, Nightjar mengekalkan kuasa sistem dengan selamat dan memberi amaran jika bateri lemah.</p>
+</div>
+<script>
+(function () {
+  var card = document.getElementById('njCard'), icon = document.getElementById('njIcon');
+  var status = document.getElementById('njStatus'), sub = document.getElementById('njSub');
+  var lidBtn = document.getElementById('njLidBtn');
+  var isAwake = true;
+  function toggle() {
+    isAwake = !isAwake;
+    card.classList.toggle('asleep', !isAwake);
+    card.setAttribute('aria-pressed', isAwake);
+    if (isAwake) {
+      icon.textContent = '☕'; status.textContent = "Mac Sedang Terjaga"; sub.textContent = "Paparan dan sistem aktif tanpa gangguan";
+    } else {
+      icon.textContent = '🌙'; status.textContent = "Tidur Biasa macOS"; sub.textContent = "Penjimatan tenaga standard aktif";
+    }
+  }
+  card.addEventListener('click', toggle);
+  card.addEventListener('keydown', function(ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggle(); } });
+  if (lidBtn) lidBtn.addEventListener('click', function() { lidBtn.classList.toggle('active'); });
+  document.querySelectorAll('.nj-presets .app-chip').forEach(function(b) {
+    if (b === lidBtn) return;
+    b.addEventListener('click', function() {
+      document.querySelectorAll('.nj-presets .app-chip').forEach(function(x) { if (x !== lidBtn) x.classList.remove('active'); });
+      b.classList.add('active'); if (!isAwake) toggle();
+    });
+  });
+})();
+</script>
 
 <!-- family:shot --><figure class="shot"><img src="../img/hero.jpg" alt="" width="1600" height="860"></figure><!-- /family:shot -->
 <section class="card">
@@ -135,6 +181,48 @@ nightjar://toggle</code></pre>
   <pre><code>"/Applications/Nightjar.app/Contents/MacOS/Nightjar" --activate --minutes=30</code></pre>
 </section>
 
+<section class="card comparison-card" id="comparison">
+  <h2>Alat pencegah tidur konvensional berbanding Nightjar</h2>
+  <p class="section-lead">Pastikan Mac anda kekal berjaga dengan selamat tanpa risiko bateri habis tanpa disedari.</p>
+  <div class="table-scroll">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Ciri</th>
+          <th>Alat Konvensional</th>
+          <th class="highlight-col">Nightjar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Kejujuran Status</strong></td>
+          <td>Gagal secara senyap apabila profil syarikat memaksa tidur</td>
+          <td class="highlight-col"><strong>Melaporkan secara telus apabila macOS mengabaikan arahan kekal terjaga</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Penutup Ditutup</strong></td>
+          <td>Mac terus tidur apabila penutup ditutup dan membatalkan proses</td>
+          <td class="highlight-col"><strong>Pembantu selamat membolehkan muat turun dan eksport terus berjalan</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Keselamatan Bateri</strong></td>
+          <td>Mengeringkan bateri MacBook hingga 0% jika anda terlupa mematikannya</td>
+          <td class="highlight-col"><strong>Melepaskan kunci tidur secara automatik jika bateri turun di bawah ambang</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Pencetus Pintar</strong></td>
+          <td>Hanya hidup dan mati secara manual</td>
+          <td class="highlight-col"><strong>Peraturan automatik: semasa memuat turun, di Wi-Fi tertentu atau semasa aplikasi dibuka</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Keistimewaan</strong></td>
+          <td>Memerlukan daemon latar belakang yang kompleks dengan akses root</td>
+          <td class="highlight-col"><strong>Perintah kuasa macOS standard tanpa memerlukan akses pentadbir</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 <section class="card">
   <h2>Privasi dalam satu perenggan</h2>
   <p>Nightjar menahan penegasan kuasa yang sedia disediakan oleh macOS. Ia tidak membaca apa-apa tentang anda, tidak membuat sebarang sambungan rangkaian, dan tiada akaun. Tetapan anda disimpan dalam bekas sandbox app itu sendiri. <a href="privacy.html">Dasar privasi</a> penuh menyatakan perkara yang sama dengan lebih terperinci.</p>
